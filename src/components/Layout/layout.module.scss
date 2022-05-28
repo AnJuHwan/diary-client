@@ -1,0 +1,10 @@
+@use '/src/styles/constants/colors';
+
+.app {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: colors.$GRAYD;
+}
