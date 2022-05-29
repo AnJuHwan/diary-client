@@ -1,10 +1,12 @@
-import Home from '../../pages/Home/Home';
+import { Outlet } from 'react-router-dom';
 import styles from './layout.module.scss';
 
 const Layout = () => {
   return (
     <div className={styles.app}>
-      <Home />
+      <div className={styles.main}>
+        <Outlet />
+      </div>
     </div>
   );
 };
