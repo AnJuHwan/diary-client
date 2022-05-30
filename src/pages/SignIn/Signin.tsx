@@ -1,23 +1,72 @@
-import React from 'react';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useSetRecoilState } from 'recoil';
+import Loading from '../../components/Common/Loading/Loading';
+import Modal from '../../components/Common/Modal/Modal';
+import Input from '../../components/Sign/Input/Input';
+import { useChangeInput } from '../../hooks/useChangeInput';
+import { userState } from '../../recoil/user';
+import { userSignin } from '../../services/Sign';
+import { cx } from '../../styles';
 import styles from './signin.module.scss';
 
 const Signin = () => {
+  const setUser = useSetRecoilState(userState);
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [visibleModal, setVisibleModal] = useState(false);
+
+  const idInput = useChangeInput();
+  const passwordInput = useChangeInput();
+  const signInValidation = idInput.state.trim().length !== 0 && passwordInput.state.trim().length !== 0;
+  const navigate = useNavigate();
+
+  const signinClickHandler = async () => {
+    setErrorMessage('');
+    try {
+      setIsLoading(true);
+      if (signInValidation) {
+        const signin = await userSignin({ email: idInput.state, password: passwordInput.state });
+        const { email, nickName, profile, _id } = signin.user;
+        if (signin.success) {
+          setUser({ email, nickName, profile, _id });
+          localStorage.setItem('id', _id);
+          navigate('/');
+        }
+        return;
+      }
+    } catch (error: any) {
+      setVisibleModal(true);
+      setErrorMessage('아이디 or 비밀번호 확인해주세요.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.signContainer}>
         <h1>LOG IN</h1>
         <form className={styles.form}>
-          <div className={styles.inputBox}>
-            <label htmlFor='id'>ID</label>
-            <input type='text' id='id' />
-          </div>
-          <div className={styles.inputBox}>
-            <label htmlFor='password'>Password</label>
-            <input type='password' id='password' />
-          </div>
-          <button type='button'>Log In</button>
+          <Input title='ID' id='id' type='text' value={idInput.state} onChange={idInput.stateChangeHandler} />
+          <Input
+            title='Password'
+            id='password'
+            type='password'
+            value={passwordInput.state}
+            onChange={passwordInput.stateChangeHandler}
+          />
+          <button
+            type='button'
+            className={cx(styles.signin, { [styles.active]: signInValidation })}
+            onClick={signinClickHandler}
+          >
+            Log In
+          </button>
+          {isLoading && <Loading />}
         </form>
       </div>
+      {visibleModal && <Modal title='로그인 실패' desc={errorMessage} setVisibleModal={setVisibleModal} />}
     </div>
   );
 };

@@ -1,0 +1,26 @@
+@use '/src/styles/constants/colors';
+
+.inputBox {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+
+  label {
+    margin-bottom: 10px;
+    margin-left: 8px;
+    font-size: 14px;
+  }
+
+  input {
+    padding: 10px 40px 10px 10px;
+    margin-bottom: 10px;
+    color: colors.$GRAY2;
+    background-color: colors.$GRAYFA;
+    border: 1px solid colors.$GRAYD;
+    border-radius: 8px;
+  }
+
+  span {
+    color: colors.$RED;
+  }
+}

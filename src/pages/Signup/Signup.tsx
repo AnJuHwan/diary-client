@@ -1,39 +1,137 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useSetRecoilState } from 'recoil';
+import Loading from '../../components/Common/Loading/Loading';
+import Modal from '../../components/Common/Modal/Modal';
+import Input from '../../components/Sign/Input/Input';
+import { useChangeInput } from '../../hooks/useChangeInput';
+import { userState } from '../../recoil/user';
+import { isIdChecked, isNicknameChecked, userSignup } from '../../services/Sign';
+import { cx } from '../../styles';
 import styles from './signup.module.scss';
 
 const Signup = () => {
-  const [id, setId] = useState('');
-  const [nickname, setNickname] = useState('');
-  const [password, setPassword] = useState('');
-  const [passwordConfirm, setPasswordConfirm] = useState('');
+  const setUser = useSetRecoilState(userState);
+
+  const [isIdCheckData, setIsIdCheckData] = useState(false);
+  const [idError, setIdError] = useState('');
+  const [isNicknameCheckData, setIsNicknameCheckData] = useState(false);
+  const [nicknameError, setNicknameError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [visibleModal, setVisibleModal] = useState(false);
+
+  const navigate = useNavigate();
+  const idInput = useChangeInput();
+  const nicknameInput = useChangeInput();
+  const passwordInput = useChangeInput();
+  const passwordConfirmInput = useChangeInput();
+
+  const isPasswordValue = passwordInput.state.trim().length !== 0 && passwordConfirmInput.state.trim().length !== 0;
+  const sigupValidation =
+    isIdCheckData &&
+    isNicknameCheckData &&
+    isPasswordValue &&
+    passwordInput.state === passwordConfirmInput.state &&
+    passwordInput.state.length > 6;
+
+  const signupClickHandler = async () => {
+    try {
+      setIsLoading(true);
+      if (sigupValidation) {
+        const signup = await userSignup({
+          email: idInput.state,
+          password: passwordInput.state,
+          nickName: nicknameInput.state,
+          profile: '',
+        });
+        const { email, nickName, profile, _id } = signup.user;
+        if (signup.success) {
+          setUser({ email, nickName, profile, _id });
+          localStorage.setItem('id', _id);
+          navigate('/');
+        }
+        return;
+      }
+    } catch (error) {
+      setVisibleModal(true);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const isIdCheckBlurHandler = async () => {
+    try {
+      const idCheck = await isIdChecked(idInput.state);
+      setIsIdCheckData(idCheck.success);
+      setIdError('');
+    } catch (error: any) {
+      setIsIdCheckData(false);
+      setIdError('이미 가입되어있는 아이디가 있습니다.');
+    }
+  };
+
+  const isNicknameCheckBlurHandler = async () => {
+    try {
+      const nicknameCheck = await isNicknameChecked(nicknameInput.state);
+      setIsNicknameCheckData(nicknameCheck.success);
+      setNicknameError('');
+    } catch (error: any) {
+      setIsNicknameCheckData(false);
+      setNicknameError('이미 가입되어있는 닉네임가 있습니다.');
+    }
+  };
 
   return (
     <div className={styles.wrapper}>
       <div className={styles.signContainer}>
         <h1>Sign Up</h1>
         <form className={styles.form}>
-          <div className={styles.inputBox}>
-            <label htmlFor='id'>ID</label>
-            <input type='text' id='id' onBlur={() => console.log('blur')} />
-          </div>
+          <Input
+            title='ID'
+            id='id'
+            type='text'
+            value={idInput.state}
+            isError={idError}
+            onChange={idInput.stateChangeHandler}
+            onBlur={isIdCheckBlurHandler}
+          />
 
-          <div className={styles.inputBox}>
-            <label htmlFor='nickname'>Nickname</label>
-            <input type='text' id='nickname' onBlur={() => console.log('blur')} />
-          </div>
+          <Input
+            title='NickName'
+            id='nickname'
+            type='text'
+            value={nicknameInput.state}
+            isError={nicknameError}
+            onChange={nicknameInput.stateChangeHandler}
+            onBlur={isNicknameCheckBlurHandler}
+          />
 
-          <div className={styles.inputBox}>
-            <label htmlFor='password'>Password</label>
-            <input type='password' id='password' />
-          </div>
-          <div className={styles.inputBox}>
-            <label htmlFor='confirm'>Password Confirm</label>
-            <input type='password' id='confirm' />
-          </div>
+          <Input
+            title='Password'
+            id='password'
+            type='password'
+            value={passwordInput.state}
+            onChange={passwordInput.stateChangeHandler}
+          />
+          <Input
+            title='Password Confirm'
+            id='confirm'
+            type='password'
+            value={passwordConfirmInput.state}
+            onChange={passwordConfirmInput.stateChangeHandler}
+          />
 
-          <button type='button' className={styles.signup}>
+          <button
+            type='button'
+            className={cx(styles.signup, { [styles.active]: sigupValidation })}
+            onClick={signupClickHandler}
+          >
             Sign Up
           </button>
+          {isLoading && <Loading />}
+          {visibleModal && (
+            <Modal title='회원가입 실패' desc='가입양식 확인바랍니다.' setVisibleModal={setVisibleModal} />
+          )}
         </form>
       </div>
     </div>
