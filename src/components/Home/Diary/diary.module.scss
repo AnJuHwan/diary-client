@@ -1,0 +1,17 @@
+@use '/src/styles/constants/colors';
+
+.diaryItem {
+  width: 100%;
+  margin-bottom: 10px;
+
+  button {
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+    padding: 20px;
+    font-size: 18px;
+    font-weight: 700;
+    background-color: colors.$MAIN;
+    border-radius: 4px;
+  }
+}

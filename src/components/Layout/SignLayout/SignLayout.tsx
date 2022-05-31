@@ -5,9 +5,9 @@ import styles from './signLayout.module.scss';
 const SignLayout = () => {
   return (
     <div className={styles.app}>
-      <main className={styles.main}>
+      <div className={styles.rightWrap}>
         <Outlet />
-      </main>
+      </div>
     </div>
   );
 };

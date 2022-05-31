@@ -6,7 +6,7 @@ import Modal from '../../components/Common/Modal/Modal';
 import Input from '../../components/Sign/Input/Input';
 import { useChangeInput } from '../../hooks/useChangeInput';
 import { userState } from '../../recoil/user';
-import { isIdChecked, isNicknameChecked, userSignup } from '../../services/Sign';
+import { isIdChecked, isNicknameChecked, userSignup } from '../../services/sign';
 import { cx } from '../../styles';
 import styles from './signup.module.scss';
 
@@ -87,6 +87,7 @@ const Signup = () => {
         <h1>Sign Up</h1>
         <form className={styles.form}>
           <Input
+            type='text'
             title='ID'
             id='id'
             value={idInput.state}
@@ -96,6 +97,7 @@ const Signup = () => {
           />
 
           <Input
+            type='text'
             title='NickName'
             id='nickname'
             value={nicknameInput.state}
@@ -105,6 +107,7 @@ const Signup = () => {
           />
 
           <Input
+            type='password'
             title='Password'
             id='password'
             value={passwordInput.state}
@@ -112,6 +115,7 @@ const Signup = () => {
             icon
           />
           <Input
+            type='password'
             title='Password Confirm'
             id='confirm'
             value={passwordConfirmInput.state}

@@ -6,7 +6,7 @@ import Modal from '../../components/Common/Modal/Modal';
 import Input from '../../components/Sign/Input/Input';
 import { useChangeInput } from '../../hooks/useChangeInput';
 import { userState } from '../../recoil/user';
-import { userSignin } from '../../services/Sign';
+import { userSignin } from '../../services/sign';
 import { cx } from '../../styles';
 import styles from './signin.module.scss';
 
@@ -48,8 +48,9 @@ const Signin = () => {
       <div className={styles.signContainer}>
         <h1>LOG IN</h1>
         <form className={styles.form}>
-          <Input title='ID' id='id' value={idInput.state} onChange={idInput.stateChangeHandler} />
+          <Input type='text' title='ID' id='id' value={idInput.state} onChange={idInput.stateChangeHandler} />
           <Input
+            type='password'
             title='Password'
             id='password'
             value={passwordInput.state}

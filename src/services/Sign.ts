@@ -1,7 +1,6 @@
+import { BASEURL } from '../utils/baseURL';
 import axios from 'axios';
 import { IIsCheck, ISign } from '../types/sign';
-
-const BASEURL = 'https://wanted-jh.herokuapp.com';
 
 interface ISignUpPrams {
   email: string;

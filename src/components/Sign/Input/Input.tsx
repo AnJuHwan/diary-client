@@ -10,9 +10,10 @@ interface IProps {
   onBlur?: () => void;
   isError?: string;
   icon?: boolean;
+  type: string;
 }
 
-const Input = ({ value, onChange, onBlur, isError, title, id, icon = false }: IProps) => {
+const Input = ({ value, onChange, onBlur, isError, title, id, icon = false, type }: IProps) => {
   const [visiblePassword, setVisiblePassword] = useState(false);
   const visiblePasswordHandler = () => {
     if (setVisiblePassword) {
@@ -30,7 +31,7 @@ const Input = ({ value, onChange, onBlur, isError, title, id, icon = false }: IP
       <label htmlFor={id}>{title}</label>
       <input
         autoComplete='off'
-        type={visiblePassword ? 'text' : 'password'}
+        type={visiblePassword ? 'text' : type}
         id={id}
         value={value}
         onChange={onChange}

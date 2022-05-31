@@ -2,7 +2,8 @@ import { useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 import { useSetRecoilState } from 'recoil';
 import { userState } from '../../recoil/user';
-import { userInfo } from '../../services/Sign';
+import { userInfo } from '../../services/sign';
+
 import Aside from '../Aside/Aside';
 import Header from '../Header/Header';
 
@@ -25,12 +26,11 @@ const Layout = () => {
 
   return (
     <div className={styles.app}>
-      <Aside />
+      {/* <Aside /> */}
       <main className={styles.main}>
         <Header />
-        <div>
-          <Outlet />
-        </div>
+
+        <Outlet />
       </main>
     </div>
   );
