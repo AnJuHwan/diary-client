@@ -5,7 +5,7 @@ const Home = () => {
   const userData = useRecoilValue(userState);
 
   console.log(userData);
-  return <div>Home</div>;
+  return <div style={{ width: '100%' }}>Home</div>;
 };
 
 export default Home;

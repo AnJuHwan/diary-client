@@ -2,27 +2,17 @@
 
 .app {
   display: flex;
+  align-content: center;
+  justify-content: center;
   width: 100%;
   height: 100vh;
   min-height: 680px;
-  background-color: aqua;
-
-  .aside {
-    width: 200px;
-    height: 100vh;
-    background-color: colors.$WHITE;
-  }
-
-  .header {
-    width: 100%;
-    height: 48px;
-    background-color: aquamarine;
-  }
 
   .main {
     display: flex;
     flex: 1;
-    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     width: 100%;
     height: 100vh;
     background-color: colors.$GRAYE;

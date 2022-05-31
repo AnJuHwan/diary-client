@@ -48,13 +48,13 @@ const Signin = () => {
       <div className={styles.signContainer}>
         <h1>LOG IN</h1>
         <form className={styles.form}>
-          <Input title='ID' id='id' type='text' value={idInput.state} onChange={idInput.stateChangeHandler} />
+          <Input title='ID' id='id' value={idInput.state} onChange={idInput.stateChangeHandler} />
           <Input
             title='Password'
             id='password'
-            type='password'
             value={passwordInput.state}
             onChange={passwordInput.stateChangeHandler}
+            icon
           />
           <button
             type='button'

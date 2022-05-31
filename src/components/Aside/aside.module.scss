@@ -1,0 +1,7 @@
+@use '/src/styles/constants/colors';
+
+.aside {
+  width: 200px;
+  height: 100vh;
+  background-color: colors.$WHITE;
+}

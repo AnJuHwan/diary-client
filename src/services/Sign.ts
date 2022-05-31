@@ -58,3 +58,13 @@ export const userSignin = async (params: ISignInParams) => {
     throw new Error(error.message);
   }
 };
+
+export const userInfo = async (id: string) => {
+  try {
+    const response = await axios.get<ISign>(`${BASEURL}/users/my?id=${id}`);
+    const { data } = response;
+    return data;
+  } catch (error: any) {
+    throw new Error(error.message);
+  }
+};

@@ -89,7 +89,6 @@ const Signup = () => {
           <Input
             title='ID'
             id='id'
-            type='text'
             value={idInput.state}
             isError={idError}
             onChange={idInput.stateChangeHandler}
@@ -99,7 +98,6 @@ const Signup = () => {
           <Input
             title='NickName'
             id='nickname'
-            type='text'
             value={nicknameInput.state}
             isError={nicknameError}
             onChange={nicknameInput.stateChangeHandler}
@@ -109,16 +107,16 @@ const Signup = () => {
           <Input
             title='Password'
             id='password'
-            type='password'
             value={passwordInput.state}
             onChange={passwordInput.stateChangeHandler}
+            icon
           />
           <Input
             title='Password Confirm'
             id='confirm'
-            type='password'
             value={passwordConfirmInput.state}
             onChange={passwordConfirmInput.stateChangeHandler}
+            icon
           />
 
           <button

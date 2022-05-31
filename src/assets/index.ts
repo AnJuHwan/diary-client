@@ -1,3 +1,3 @@
-export { ReactComponent as SearchIcon } from './search.svg'
-export { ReactComponent as StarIcon } from './star.svg'
-export { ReactComponent as CloseIcon } from './close.svg'
+export { ReactComponent as DefaultIcon } from './defaultIcon.svg';
+export { ReactComponent as CloseEyesIcon } from './closeEyes.svg';
+export { ReactComponent as ShowEyesIcon } from './showEyes.svg';

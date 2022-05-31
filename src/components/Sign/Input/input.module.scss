@@ -1,9 +1,18 @@
 @use '/src/styles/constants/colors';
 
 .inputBox {
+  position: relative;
   display: flex;
   flex-direction: column;
   margin-bottom: 20px;
+
+  .icon {
+    position: absolute;
+    right: 10px;
+    bottom: 18px;
+    width: 24px;
+    height: 24px;
+  }
 
   label {
     margin-bottom: 10px;
