@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
-import ContentContainer from '../../components/Common/ContentContainer/ContentContainer';
+import ContentContainer from '../../components/Home/ContentContainer/ContentContainer';
 import { diaryListState } from '../../recoil/diary';
 import { userState } from '../../recoil/user';
 import { getMyDiary } from '../../services/diary';
@@ -23,6 +23,7 @@ const Home = () => {
   }, [localStorageId, setDiary]);
 
   console.log(userData);
+
   return (
     <main className={styles.main}>
       <div className={styles.titleBox}>

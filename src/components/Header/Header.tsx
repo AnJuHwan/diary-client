@@ -1,16 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useRecoilValue, useResetRecoilState } from 'recoil';
+import { useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil';
 import { DefaultIcon, SearchIcon } from '../../assets';
 import { useChangeInput } from '../../hooks/useChangeInput';
 import useDebounce from '../../hooks/useDebounce';
-import { diaryListState } from '../../recoil/diary';
+import { diaryFilterListState, diaryListState } from '../../recoil/diary';
 import { userState } from '../../recoil/user';
 
 import styles from './header.module.scss';
 
 const Header = () => {
   const userInfo = useRecoilValue(userState);
+  const diaryList = useRecoilValue(diaryListState);
+  const diaryFilterList = useSetRecoilState(diaryFilterListState);
   const userInfoReset = useResetRecoilState(userState);
   const diaryListReset = useResetRecoilState(diaryListState);
   const { state, stateChangeHandler } = useChangeInput();
@@ -19,8 +21,9 @@ const Header = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log(debounce);
-  }, [debounce]);
+    const filterList = diaryList.filter((item) => item.title === state);
+    diaryFilterList(filterList);
+  }, [debounce, diaryFilterList, diaryList, state]);
 
   const signHandler = () => {
     if (localStorageItem) {

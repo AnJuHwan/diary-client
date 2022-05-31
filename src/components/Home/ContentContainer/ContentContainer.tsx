@@ -1,15 +1,17 @@
-import React from 'react';
 import { useRecoilValue } from 'recoil';
-import { diaryListState } from '../../../recoil/diary';
-import DiaryItem from '../../Home/Diary/DiaryItem';
+import { diaryFilterListState, diaryListState } from '../../../recoil/diary';
+import DiaryItem from '../Diary/DiaryItem';
 import styles from './contentContainer.module.scss';
 
 const ContentContainer = () => {
   const diaryList = useRecoilValue(diaryListState);
+  const diaryFilterList = useRecoilValue(diaryFilterListState);
+
+  const list = diaryFilterList.length !== 0 ? diaryFilterList : diaryList;
 
   return (
     <ul className={styles.contentWrap}>
-      {diaryList.map((diary) => {
+      {list.map((diary) => {
         const { _id: id } = diary;
         return <DiaryItem key={`${id}`} diary={diary} />;
       })}

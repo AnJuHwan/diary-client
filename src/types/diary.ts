@@ -1,4 +1,5 @@
 export interface IDiaryList {
+  success: boolean;
   postItem: IDiary[];
 }
 
