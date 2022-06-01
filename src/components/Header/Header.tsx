@@ -40,7 +40,13 @@ const Header = () => {
       <div className={styles.divBox}>
         <div className={styles.inputBox}>
           <SearchIcon className={styles.searchIcon} />
-          <input id='search' type='text' value={state} onChange={stateChangeHandler} />
+          <input
+            id='search'
+            type='text'
+            placeholder='검색어를 입력해보세요.'
+            value={state}
+            onChange={stateChangeHandler}
+          />
         </div>
 
         <div className={styles.profileBox}>

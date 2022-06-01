@@ -48,8 +48,16 @@ const Signin = () => {
       <div className={styles.signContainer}>
         <h1>LOG IN</h1>
         <form className={styles.form}>
-          <Input type='text' title='ID' id='id' value={idInput.state} onChange={idInput.stateChangeHandler} />
           <Input
+            placeholder='아이디를 입력해주세요.'
+            type='text'
+            title='ID'
+            id='id'
+            value={idInput.state}
+            onChange={idInput.stateChangeHandler}
+          />
+          <Input
+            placeholder='비밀번호을 입력해주세요.'
             type='password'
             title='Password'
             id='password'

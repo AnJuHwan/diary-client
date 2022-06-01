@@ -1,15 +1,18 @@
-import { ChangeEvent, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { ChangeEvent, useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
+import Loading from '../../components/Common/Loading/Loading';
 import { diaryDetailState } from '../../recoil/diary';
-import { getDetailDiary } from '../../services/diary';
+import { editDiary, getDetailDiary } from '../../services/diary';
 import { IDetailData } from '../../types/diary';
 import styles from './editDiary.module.scss';
 
 const EditDiary = () => {
   const [detail, setDetail] = useRecoilState<IDetailData>(diaryDetailState);
   const { title: dTitle, content: dContent } = detail;
+  const [isLoading, setIsLoading] = useState(false);
   const params = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getDetailDiaryItem = async () => {
@@ -32,6 +35,22 @@ const EditDiary = () => {
     setDetail({ ...detail, content: e.currentTarget.value });
   };
 
+  const editDiaryHandler = async () => {
+    try {
+      setIsLoading(true);
+      if (params.id) {
+        const editItem = await editDiary({ id: params.id, title: detail.title, content: detail.content });
+        if (editItem.success) {
+          navigate(`/detail/${params.id}`);
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <main className={styles.main}>
       {dTitle && (
@@ -51,7 +70,10 @@ const EditDiary = () => {
             placeholder='내용을 입력해주세요.'
             className={styles.contentInput}
           />
-          <button type='button'>Edit Confirm</button>
+          <button type='button' onClick={editDiaryHandler}>
+            Edit Confirm
+          </button>
+          {isLoading && <Loading />}
         </div>
       )}
     </main>

@@ -8,6 +8,12 @@ interface IPostParams {
   content: string;
 }
 
+interface IEditParams {
+  id: string;
+  title: string;
+  content: string;
+}
+
 export const getMyDiary = async (id: string) => {
   try {
     const response = await axios.get<IDiaryList>(`${BASEURL}/post/${id}`);
@@ -45,6 +51,16 @@ export const getDetailDiary = async (id: string) => {
 export const deleteDiary = async (id: string) => {
   try {
     const response = await axios.delete<IDiaryList>(`${BASEURL}/post/${id}`);
+    const { data } = response;
+    return data;
+  } catch (error) {
+    throw new Error('server Error');
+  }
+};
+
+export const editDiary = async (editParams: IEditParams) => {
+  try {
+    const response = await axios.put<IDiaryList>(`${BASEURL}/post/edit`, editParams);
     const { data } = response;
     return data;
   } catch (error) {

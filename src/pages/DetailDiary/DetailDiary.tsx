@@ -8,12 +8,11 @@ import { IDetailData } from '../../types/diary';
 import styles from './detailDiary.module.scss';
 
 const DetailDiary = () => {
-  const [detail, setDetail] = useRecoilState<IDetailData>(diaryDetailState);
-
   const params = useParams();
+  const navigate = useNavigate();
+  const [detail, setDetail] = useRecoilState<IDetailData>(diaryDetailState);
   const { title: dTitle, content: dContent } = detail;
   const [visibleModal, setVisibleModal] = useState(false);
-  const navigate = useNavigate();
   let timer: NodeJS.Timeout;
 
   useEffect(() => {

@@ -4,12 +4,12 @@ import { uploadDiary } from '../../services/diary';
 import styles from './createDiary.module.scss';
 
 const CreateDiary = () => {
+  const navigate = useNavigate();
   const titleValue = useChangeInput('');
   const contentValue = useChangeInput('');
   const { state, stateChangeHandler } = titleValue;
   const { state: contentState, stateChangeHandler: contetnHandler } = contentValue;
   const localStorageId = localStorage.getItem('id');
-  const navigate = useNavigate();
 
   const uploadClickHandler = async () => {
     if (localStorageId) {
