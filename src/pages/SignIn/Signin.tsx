@@ -16,8 +16,8 @@ const Signin = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const [visibleModal, setVisibleModal] = useState(false);
 
-  const idInput = useChangeInput();
-  const passwordInput = useChangeInput();
+  const idInput = useChangeInput('');
+  const passwordInput = useChangeInput('');
   const signInValidation = idInput.state.trim().length !== 0 && passwordInput.state.trim().length !== 0;
   const navigate = useNavigate();
 

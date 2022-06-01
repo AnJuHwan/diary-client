@@ -1,0 +1,65 @@
+@use '/src/styles/constants/colors';
+
+.main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+
+  .contentWrap {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    width: 80%;
+    height: 640px;
+    padding: 20px;
+    overflow: auto;
+    background-color: colors.$WHITE;
+    border-radius: 4px;
+
+    .title {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid colors.$GRAYD;
+      border-radius: 4px;
+    }
+
+    .content {
+      width: 100%;
+      height: 100%;
+      padding: 10px;
+      margin-top: 20px;
+      border: 1px solid colors.$GRAYD;
+      border-radius: 4px;
+    }
+
+    .buttonBox {
+      display: flex;
+
+      .link {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100px;
+        padding: 10px;
+        margin-top: 20px;
+        margin-left: 20px;
+        color: colors.$BLACK;
+        background-color: colors.$MAIN;
+        border-radius: 8px;
+      }
+
+      button {
+        width: 100px;
+        padding: 10px;
+        margin-top: 20px;
+        margin-left: 20px;
+        color: colors.$BLACK;
+        background-color: colors.$MAIN;
+        border-radius: 8px;
+      }
+    }
+  }
+}

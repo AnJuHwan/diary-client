@@ -15,7 +15,7 @@ const Header = () => {
   const diaryFilterList = useSetRecoilState(diaryFilterListState);
   const userInfoReset = useResetRecoilState(userState);
   const diaryListReset = useResetRecoilState(diaryListState);
-  const { state, stateChangeHandler } = useChangeInput();
+  const { state, stateChangeHandler } = useChangeInput('');
   const localStorageItem = localStorage.getItem('id');
   const debounce = useDebounce(state);
   const navigate = useNavigate();

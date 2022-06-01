@@ -1,12 +1,11 @@
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useChangeInput } from '../../hooks/useChangeInput';
 import { uploadDiary } from '../../services/diary';
 import styles from './createDiary.module.scss';
 
 const CreateDiary = () => {
-  const titleValue = useChangeInput();
-  const contentValue = useChangeInput();
+  const titleValue = useChangeInput('');
+  const contentValue = useChangeInput('');
   const { state, stateChangeHandler } = titleValue;
   const { state: contentState, stateChangeHandler: contetnHandler } = contentValue;
   const localStorageId = localStorage.getItem('id');

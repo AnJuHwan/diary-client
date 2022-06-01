@@ -21,10 +21,10 @@ const Signup = () => {
   const [visibleModal, setVisibleModal] = useState(false);
 
   const navigate = useNavigate();
-  const idInput = useChangeInput();
-  const nicknameInput = useChangeInput();
-  const passwordInput = useChangeInput();
-  const passwordConfirmInput = useChangeInput();
+  const idInput = useChangeInput('');
+  const nicknameInput = useChangeInput('');
+  const passwordInput = useChangeInput('');
+  const passwordConfirmInput = useChangeInput('');
 
   const isPasswordValue = passwordInput.state.trim().length !== 0 && passwordConfirmInput.state.trim().length !== 0;
   const sigupValidation =

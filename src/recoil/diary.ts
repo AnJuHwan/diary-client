@@ -1,4 +1,4 @@
-import { IDiary } from '../types/diary';
+import { IDetailData, IDiary } from '../types/diary';
 import { atom } from 'recoil';
 
 export const diaryListState = atom<IDiary[]>({
@@ -9,4 +9,9 @@ export const diaryListState = atom<IDiary[]>({
 export const diaryFilterListState = atom<IDiary[]>({
   key: '#diaryFilterListState',
   default: [],
+});
+
+export const diaryDetailState = atom<IDetailData>({
+  key: '#diaryEditInputValueState',
+  default: { title: '', content: '', id: '', userId: '' },
 });
