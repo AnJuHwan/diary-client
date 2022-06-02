@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useSetRecoilState } from 'recoil';
 import Loading from '../../components/Common/Loading/Loading';
 import Modal from '../../components/Common/Modal/Modal';
@@ -32,7 +32,7 @@ const Signup = () => {
     isNicknameCheckData &&
     isPasswordValue &&
     passwordInput.state === passwordConfirmInput.state &&
-    passwordInput.state.length > 6;
+    passwordInput.state.length > 8;
 
   const signupClickHandler = async () => {
     try {
@@ -134,7 +134,11 @@ const Signup = () => {
           >
             Sign Up
           </button>
+          <Link to='/signin' className={styles.signinLink}>
+            Sign In
+          </Link>
           {isLoading && <Loading />}
+
           {visibleModal && (
             <Modal title='회원가입 실패' desc='가입양식 확인바랍니다.' setVisibleModal={setVisibleModal} />
           )}

@@ -8,6 +8,12 @@
   background-color: colors.$WHITE;
   border-bottom: 1px solid colors.$GRAYE;
 
+  .homeLink {
+    margin: 20px;
+    font-size: 24px;
+    color: colors.$GRAY2;
+  }
+
   .divBox {
     display: flex;
     align-items: center;

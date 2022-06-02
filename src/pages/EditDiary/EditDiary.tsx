@@ -1,18 +1,37 @@
 import { ChangeEvent, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
-import Loading from '../../components/Common/Loading/Loading';
 import { diaryDetailState } from '../../recoil/diary';
 import { editDiary, getDetailDiary } from '../../services/diary';
 import { IDetailData } from '../../types/diary';
+import Loading from '../../components/Common/Loading/Loading';
+import Modal from '../../components/Common/Modal/Modal';
 import styles from './editDiary.module.scss';
 
+let timer: NodeJS.Timeout;
 const EditDiary = () => {
   const [detail, setDetail] = useRecoilState<IDetailData>(diaryDetailState);
   const { title: dTitle, content: dContent } = detail;
   const [isLoading, setIsLoading] = useState(false);
   const params = useParams();
   const navigate = useNavigate();
+  const localStorageId = localStorage.getItem('id');
+  const [visibleModal, setVisibleModal] = useState(false);
+  const [message, setMessage] = useState('');
+
+  useEffect(() => {
+    if (!localStorageId) {
+      setVisibleModal(true);
+      setMessage('로그인 후 이용해주세요.');
+      timer = setTimeout(() => {
+        navigate('/signin');
+      }, 1500);
+    }
+    return () => {
+      setVisibleModal(false);
+      clearTimeout(timer);
+    };
+  }, [localStorageId, navigate]);
 
   useEffect(() => {
     const getDetailDiaryItem = async () => {
@@ -45,7 +64,7 @@ const EditDiary = () => {
         }
       }
     } catch (error) {
-      console.log(error);
+      setMessage('서버에 문제가 있습니다.');
     } finally {
       setIsLoading(false);
     }
@@ -76,6 +95,7 @@ const EditDiary = () => {
             Edit Confirm
           </button>
           {isLoading && <Loading />}
+          {visibleModal && <Modal title='알림' desc={message} setVisibleModal={setVisibleModal} />}
         </div>
       )}
     </main>

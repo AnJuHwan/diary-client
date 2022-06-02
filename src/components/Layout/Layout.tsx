@@ -3,10 +3,7 @@ import { Outlet } from 'react-router-dom';
 import { useSetRecoilState } from 'recoil';
 import { userState } from '../../recoil/user';
 import { userInfo } from '../../services/sign';
-
-import Aside from '../Aside/Aside';
 import Header from '../Header/Header';
-
 import styles from './layout.module.scss';
 
 const Layout = () => {
@@ -26,10 +23,8 @@ const Layout = () => {
 
   return (
     <div className={styles.app}>
-      {/* <Aside /> */}
       <main className={styles.main}>
         <Header />
-
         <Outlet />
       </main>
     </div>

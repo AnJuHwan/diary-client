@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import { CloseEyesIcon, ShowEyesIcon } from '../../../assets';
 import styles from './input.module.scss';
 

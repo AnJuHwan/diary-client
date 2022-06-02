@@ -5,13 +5,13 @@
   align-items: center;
   justify-content: center;
   width: 70%;
-  height: 80%;
   background-color: colors.$WHITE;
   border-radius: 15px;
 
   .signContainer {
     display: flex;
     flex-direction: column;
+    margin-top: 30px;
 
     h1 {
       font-size: 20px;
@@ -39,7 +39,7 @@
         transition: 0.2s;
 
         &.active {
-          background-color: colors.$MAIN;
+          background-color: colors.$GRAY2;
         }
       }
 

@@ -1,12 +1,11 @@
-import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil';
+import { useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { diaryFilterListState, diaryListState } from '../../recoil/diary';
+import { userState } from '../../recoil/user';
 import { DefaultIcon, SearchIcon } from '../../assets';
 import { useChangeInput } from '../../hooks/useChangeInput';
 import useDebounce from '../../hooks/useDebounce';
-import { diaryFilterListState, diaryListState } from '../../recoil/diary';
-import { userState } from '../../recoil/user';
-
 import styles from './header.module.scss';
 
 const Header = () => {
@@ -15,10 +14,10 @@ const Header = () => {
   const diaryFilterList = useSetRecoilState(diaryFilterListState);
   const userInfoReset = useResetRecoilState(userState);
   const diaryListReset = useResetRecoilState(diaryListState);
+  const navigate = useNavigate();
   const { state, stateChangeHandler } = useChangeInput('');
   const localStorageItem = localStorage.getItem('id');
   const debounce = useDebounce(state);
-  const navigate = useNavigate();
 
   useEffect(() => {
     const filterList = diaryList.filter((item) => item.title === state);
@@ -30,6 +29,7 @@ const Header = () => {
       localStorage.removeItem('id');
       userInfoReset();
       diaryListReset();
+      navigate('/');
       return;
     }
     navigate('/signin');
@@ -37,6 +37,9 @@ const Header = () => {
 
   return (
     <header className={styles.header}>
+      <Link to='/' className={styles.homeLink}>
+        Home
+      </Link>
       <div className={styles.divBox}>
         <div className={styles.inputBox}>
           <SearchIcon className={styles.searchIcon} />

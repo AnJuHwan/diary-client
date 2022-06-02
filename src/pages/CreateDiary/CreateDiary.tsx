@@ -1,25 +1,45 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useChangeInput } from '../../hooks/useChangeInput';
-import { useIsLoginPage } from '../../hooks/useIsLoginPage';
 import { uploadDiary } from '../../services/diary';
+import Modal from '../../components/Common/Modal/Modal';
 import styles from './createDiary.module.scss';
 
 const CreateDiary = () => {
+  const [visibleModal, setVisibleModal] = useState(false);
   const navigate = useNavigate();
   const titleValue = useChangeInput('');
   const contentValue = useChangeInput('');
   const { state, stateChangeHandler } = titleValue;
   const { state: contentState, stateChangeHandler: contetnHandler } = contentValue;
   const localStorageId = localStorage.getItem('id');
-  const isLogin = useIsLoginPage();
+  const [message, setMessage] = useState('');
+
+  useEffect(() => {
+    let timer: NodeJS.Timeout;
+    if (!localStorageId) {
+      setVisibleModal(true);
+      setMessage('로그인을 한 후 이용해주세요.');
+      timer = setTimeout(() => {
+        navigate('/signin');
+      }, 1500);
+    }
+    return () => {
+      setVisibleModal(false);
+      clearTimeout(timer);
+    };
+  }, [localStorageId, navigate]);
 
   const uploadClickHandler = async () => {
-    if (localStorageId) {
-      const upload = await uploadDiary({ userId: localStorageId, title: state, content: contentState });
-      if (upload.success) {
-        navigate('/');
+    try {
+      if (localStorageId) {
+        const upload = await uploadDiary({ userId: localStorageId, title: state, content: contentState });
+        if (upload.success) {
+          navigate('/');
+        }
       }
+    } catch (error) {
+      setMessage('서버에 문제가 있습니다.');
     }
   };
 
@@ -46,6 +66,7 @@ const CreateDiary = () => {
         <button type='button' onClick={uploadClickHandler}>
           Upload
         </button>
+        {visibleModal && <Modal title='알림' desc={message} setVisibleModal={setVisibleModal} />}
       </div>
     </main>
   );

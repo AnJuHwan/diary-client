@@ -7,13 +7,29 @@ import { deleteDiary, getDetailDiary } from '../../services/diary';
 import { IDetailData } from '../../types/diary';
 import styles from './detailDiary.module.scss';
 
+let timer: NodeJS.Timeout;
 const DetailDiary = () => {
   const params = useParams();
+  const localStorageId = localStorage.getItem('id');
   const navigate = useNavigate();
   const [detail, setDetail] = useRecoilState<IDetailData>(diaryDetailState);
   const { title: dTitle, content: dContent } = detail;
   const [visibleModal, setVisibleModal] = useState(false);
-  let timer: NodeJS.Timeout;
+  const [message, setMessage] = useState('');
+
+  useEffect(() => {
+    if (!localStorageId) {
+      setVisibleModal(true);
+      setMessage('로그인 후 이용해주세요');
+      timer = setTimeout(() => {
+        navigate('/signin');
+      }, 1500);
+    }
+    return () => {
+      setVisibleModal(false);
+      clearTimeout(timer);
+    };
+  }, [localStorageId, navigate]);
 
   useEffect(() => {
     const getDetailDiaryItem = async () => {
@@ -33,6 +49,7 @@ const DetailDiary = () => {
       const detailDiary = await deleteDiary(params.id);
       if (detailDiary.success) {
         setVisibleModal(true);
+        setMessage('다이어리가 삭제되었습니다.');
         clearTimeout(timer);
         timer = setTimeout(() => {
           navigate('/');
@@ -59,7 +76,7 @@ const DetailDiary = () => {
           </div>
         </div>
       )}
-      {visibleModal && <Modal title='삭제' desc='삭제되었습니다.' setVisibleModal={setVisibleModal} />}
+      {visibleModal && <Modal title='알림' desc={message} setVisibleModal={setVisibleModal} />}
     </main>
   );
 };

@@ -5,13 +5,13 @@
   align-items: center;
   justify-content: center;
   width: 70%;
-  height: 640px;
   background-color: colors.$WHITE;
   border-radius: 15px;
 
   .signContainer {
     display: flex;
     flex-direction: column;
+    margin-top: 30px;
 
     h1 {
       font-size: 20px;
@@ -39,8 +39,20 @@
         transition: 0.2s;
 
         &.active {
-          background-color: colors.$MAIN;
+          background-color: colors.$GRAY2;
         }
+      }
+
+      .signinLink {
+        display: flex;
+        flex-shrink: 0;
+        align-items: center;
+        justify-content: center;
+        height: 32px;
+        margin-top: 15px;
+        color: colors.$WHITE;
+        background-color: colors.$GRAYD;
+        border-radius: 4px;
       }
     }
   }

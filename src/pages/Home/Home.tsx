@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useSetRecoilState } from 'recoil';
-import ContentContainer from '../../components/Home/ContentContainer/ContentContainer';
 import { diaryListState } from '../../recoil/diary';
 import { getMyDiary } from '../../services/diary';
+import ContentContainer from '../../components/Home/ContentContainer/ContentContainer';
 import styles from './home.module.scss';
 
 const Home = () => {
