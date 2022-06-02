@@ -87,7 +87,7 @@ const Signup = () => {
         <h1>Sign Up</h1>
         <form className={styles.form}>
           <Input
-            placeholder='아이디를 입력해주세요.'
+            placeholder='아이디'
             type='text'
             title='ID'
             id='id'
@@ -98,7 +98,7 @@ const Signup = () => {
           />
 
           <Input
-            placeholder='닉네임을 입력해주세요.'
+            placeholder='닉네임'
             type='text'
             title='NickName'
             id='nickname'
@@ -109,7 +109,7 @@ const Signup = () => {
           />
 
           <Input
-            placeholder='비밀번호을 입력해주세요.'
+            placeholder='비밀번호'
             type='password'
             title='Password'
             id='password'
@@ -118,7 +118,7 @@ const Signup = () => {
             icon
           />
           <Input
-            placeholder='비밀번호와 일치하게 입력해주세요.'
+            placeholder='비밀번호 확인'
             type='password'
             title='Password Confirm'
             id='confirm'

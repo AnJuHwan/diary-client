@@ -55,6 +55,7 @@ const EditDiary = () => {
     <main className={styles.main}>
       {dTitle && (
         <div className={styles.contentWrap}>
+          <h2>제목</h2>
           <input
             placeholder='제목을 입력해주세요.'
             autoComplete='off'
@@ -63,6 +64,7 @@ const EditDiary = () => {
             value={dTitle}
             onChange={titleChangeHandler}
           />
+          <h2>내용</h2>
           <textarea
             value={dContent}
             onChange={contentChangeHandler}

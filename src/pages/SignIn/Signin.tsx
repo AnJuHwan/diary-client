@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useSetRecoilState } from 'recoil';
 import Loading from '../../components/Common/Loading/Loading';
 import Modal from '../../components/Common/Modal/Modal';
@@ -72,6 +72,9 @@ const Signin = () => {
           >
             Log In
           </button>
+          <Link to='/signup' className={styles.signupLink}>
+            Sign up
+          </Link>
           {isLoading && <Loading />}
         </form>
       </div>

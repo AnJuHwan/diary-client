@@ -45,7 +45,9 @@ const DetailDiary = () => {
     <main className={styles.main}>
       {dTitle && (
         <div className={styles.contentWrap}>
+          <h2>제목</h2>
           <div className={styles.title}>{dTitle}</div>
+          <h2>내용</h2>
           <div className={styles.content}>{dContent}</div>
           <div className={styles.buttonBox}>
             <Link to={`/edit/${params.id}`} className={styles.link}>
