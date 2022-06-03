@@ -23,10 +23,10 @@ const Layout = () => {
 
   return (
     <div className={styles.app}>
-      <main className={styles.main}>
+      <div className={styles.wrap}>
         <Header />
         <Outlet />
-      </main>
+      </div>
     </div>
   );
 };
