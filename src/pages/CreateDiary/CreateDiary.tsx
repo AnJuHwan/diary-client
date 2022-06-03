@@ -63,9 +63,11 @@ const CreateDiary = () => {
           placeholder='내용을 입력해주세요.'
           className={styles.contentInput}
         />
-        <button type='button' onClick={uploadClickHandler}>
-          Upload
-        </button>
+        <div className={styles.buttonBox}>
+          <button type='button' onClick={uploadClickHandler}>
+            Upload
+          </button>
+        </div>
         {visibleModal && <Modal title='알림' desc={message} setVisibleModal={setVisibleModal} />}
       </div>
     </main>

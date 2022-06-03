@@ -91,9 +91,11 @@ const EditDiary = () => {
             placeholder='내용을 입력해주세요.'
             className={styles.contentInput}
           />
-          <button type='button' onClick={editDiaryHandler}>
-            Edit Confirm
-          </button>
+          <div className={styles.buttonBox}>
+            <button type='button' onClick={editDiaryHandler}>
+              Edit Confirm
+            </button>
+          </div>
           {isLoading && <Loading />}
           {visibleModal && <Modal title='알림' desc={message} setVisibleModal={setVisibleModal} />}
         </div>

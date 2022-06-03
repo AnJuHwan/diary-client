@@ -13,22 +13,23 @@
     flex-direction: column;
     width: 80%;
     height: 80%;
-    padding: 20px;
+    padding: 50px;
     overflow: auto;
     background-color: colors.$WHITE;
-    border-radius: 4px;
+    border-radius: 10px;
 
     h2 {
-      margin-bottom: 5px;
+      margin-bottom: 8px;
       font-size: 18px;
+      font-weight: 600;
     }
 
     input {
       width: 100%;
-      padding: 10px;
-      margin-bottom: 20px;
-      border: 1px solid colors.$GRAYD;
-      border-radius: 4px;
+      padding: 14px 10px;
+      margin-bottom: 35px;
+      border-bottom: 1px solid colors.$GRAYF0;
+      border-radius: 0;
     }
 
     .contentInput {
@@ -36,16 +37,26 @@
       height: 100%;
       padding: 10px;
       resize: none;
-      border: 1px solid colors.$GRAYD;
-      border-radius: 4px;
+      border: 1px solid colors.$GRAYF0;
+      border-radius: 0;
     }
 
-    button {
-      padding: 10px;
-      margin-top: 20px;
-      color: colors.$WHITE;
-      background-color: colors.$MAIN;
-      border-radius: 8px;
+    .buttonBox {
+      display: flex;
+      justify-content: flex-end;
+
+      button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 120px;
+        padding: 15px;
+        margin-top: 20px;
+        font-size: 16px;
+        color: colors.$WHITE;
+        background-color: colors.$MAIN;
+        border-radius: 10px;
+      }
     }
   }
 }
