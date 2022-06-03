@@ -8,10 +8,15 @@
     display: flex;
     justify-content: flex-start;
     width: 100%;
-    padding: 20px;
+    padding: 30px;
     font-size: 18px;
-    font-weight: 700;
-    background-color: colors.$MAIN;
-    border-radius: 4px;
+    font-weight: 600;
+    background-color: colors.$WHITE;
+    border: 1px solid colors.$GRAYEC;
+    border-radius: 10px;
+
+    &:hover {
+      border: 1px solid #7651e1;
+    }
   }
 }

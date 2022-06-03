@@ -8,23 +8,51 @@
   width: 100%;
   height: 100%;
 
-  .titleBox {
+  .searchCreateBox {
     display: flex;
     align-items: center;
     justify-content: space-between;
+
+    .inputBox {
+      position: relative;
+      width: 600px;
+      height: 100%;
+
+      .searchIcon {
+        position: absolute;
+        top: 3px;
+        left: 2px;
+        width: 36px;
+        height: 36px;
+      }
+
+      input {
+        width: 100%;
+        padding: 10px 10px 10px 40px;
+        border: 1px solid colors.$GRAYD;
+        border-radius: 4px;
+      }
+    }
+  }
+
+  .titleBox {
+    display: flex;
+    flex-direction: column;
     width: 80%;
     margin-bottom: 20px;
 
     span {
-      font-size: 18px;
+      margin-bottom: 20px;
+      font-size: 24px;
       font-weight: 700;
     }
 
     .createLink {
-      padding: 10px;
+      padding: 12px 15px;
+      font-size: 16px;
       color: colors.$WHITE;
       background-color: colors.$MAIN;
-      border-radius: 8px;
+      border-radius: 10px;
     }
   }
 }

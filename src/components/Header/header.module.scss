@@ -3,13 +3,13 @@
 .header {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   width: 100%;
   background-color: colors.$WHITE;
   border-bottom: 1px solid colors.$GRAYE;
+  box-shadow: 2px 1px 10px -3px rgba(colors.$BLACK, 10%);
 
   .homeLink {
-    margin: 20px;
     font-size: 24px;
     color: colors.$GRAY2;
   }
@@ -19,28 +19,8 @@
     align-items: center;
     justify-content: space-between;
     width: 80%;
-    margin: 10px;
-
-    .inputBox {
-      position: relative;
-      width: 100%;
-      height: 100%;
-
-      .searchIcon {
-        position: absolute;
-        top: 3px;
-        left: 2px;
-        width: 36px;
-        height: 36px;
-      }
-
-      input {
-        width: 100%;
-        padding: 10px 10px 10px 40px;
-        border: 1px solid colors.$GRAYD;
-        border-radius: 4px;
-      }
-    }
+    padding: 20px 0;
+    margin: 0 auto;
   }
 
   .profileBox {
@@ -57,7 +37,7 @@
     button {
       padding: 10px;
       margin-left: 10px;
-      background-color: colors.$MAIN;
+      font-size: 16px;
       border-radius: 8px;
     }
   }
