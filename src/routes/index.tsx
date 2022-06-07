@@ -5,6 +5,7 @@ import CreateDiary from '../pages/CreateDiary/CreateDiary';
 import DetailDiary from '../pages/DetailDiary/DetailDiary';
 import EditDiary from '../pages/EditDiary/EditDiary';
 import Home from '../pages/Home/Home';
+import MyPage from '../pages/MyPage/MyPage';
 import Signin from '../pages/SignIn/Signin';
 import Signup from '../pages/Signup/Signup';
 
@@ -16,6 +17,7 @@ const RootRoute = () => {
         <Route path='create' element={<CreateDiary />} />
         <Route path='/detail/:id' element={<DetailDiary />} />
         <Route path='/edit/:id' element={<EditDiary />} />
+        <Route path='my' element={<MyPage />} />
       </Route>
 
       <Route path='/' element={<SignLayout />}>

@@ -7,6 +7,8 @@ import { IDetailData } from '../../types/diary';
 import Loading from '../../components/Common/Loading/Loading';
 import Modal from '../../components/Common/Modal/Modal';
 import styles from './editDiary.module.scss';
+import DiaryButton from '../../components/Common/DiaryButton/DiaryButton';
+import MainContainer from '../../components/Common/MainContainer/MainContainer';
 
 let timer: NodeJS.Timeout;
 const EditDiary = () => {
@@ -71,7 +73,7 @@ const EditDiary = () => {
   };
 
   return (
-    <main className={styles.main}>
+    <MainContainer>
       {dTitle && (
         <div className={styles.contentWrap}>
           <h2>제목</h2>
@@ -91,16 +93,13 @@ const EditDiary = () => {
             placeholder='내용을 입력해주세요.'
             className={styles.contentInput}
           />
-          <div className={styles.buttonBox}>
-            <button type='button' onClick={editDiaryHandler}>
-              Edit Confirm
-            </button>
-          </div>
+          <DiaryButton onClick={editDiaryHandler} text='Edit Confirm' />
+
           {isLoading && <Loading />}
           {visibleModal && <Modal title='알림' desc={message} setVisibleModal={setVisibleModal} />}
         </div>
       )}
-    </main>
+    </MainContainer>
   );
 };
 

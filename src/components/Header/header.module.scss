@@ -39,6 +39,26 @@
       margin-left: 10px;
       font-size: 16px;
       border-radius: 8px;
+
+      &:hover {
+        color: colors.$WHITE;
+        background-color: colors.$MAIN;
+        transition: 300ms;
+      }
+    }
+
+    a {
+      padding: 10px;
+      margin-left: 10px;
+      font-size: 16px;
+      color: colors.$BLACK;
+      border-radius: 8px;
+
+      &:hover {
+        color: colors.$WHITE;
+        background-color: colors.$MAIN;
+        transition: 200ms;
+      }
     }
   }
 }

@@ -33,7 +33,9 @@ const Header = () => {
         </Link>
         <div className={styles.profileBox}>
           <DefaultIcon />
+
           {localStorageItem && <span>{userInfo.nickName} 님</span>}
+          <Link to='/my'>회원정보변경</Link>
           <button type='button' onClick={signHandler}>
             {localStorageItem ? '로그아웃' : '로그인'}
           </button>

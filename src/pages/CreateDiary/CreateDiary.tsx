@@ -4,6 +4,8 @@ import { useChangeInput } from '../../hooks/useChangeInput';
 import { uploadDiary } from '../../services/diary';
 import Modal from '../../components/Common/Modal/Modal';
 import styles from './createDiary.module.scss';
+import DiaryButton from '../../components/Common/DiaryButton/DiaryButton';
+import MainContainer from '../../components/Common/MainContainer/MainContainer';
 
 const CreateDiary = () => {
   const [visibleModal, setVisibleModal] = useState(false);
@@ -44,7 +46,7 @@ const CreateDiary = () => {
   };
 
   return (
-    <main className={styles.main}>
+    <MainContainer>
       <div className={styles.contentWrap}>
         <h2>제목</h2>
         <input
@@ -63,14 +65,11 @@ const CreateDiary = () => {
           placeholder='내용을 입력해주세요.'
           className={styles.contentInput}
         />
-        <div className={styles.buttonBox}>
-          <button type='button' onClick={uploadClickHandler}>
-            Upload
-          </button>
-        </div>
+        <DiaryButton onClick={uploadClickHandler} text='Upload' />
+
         {visibleModal && <Modal title='알림' desc={message} setVisibleModal={setVisibleModal} />}
       </div>
-    </main>
+    </MainContainer>
   );
 };
 

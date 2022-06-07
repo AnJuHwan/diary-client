@@ -8,6 +8,7 @@ import styles from './home.module.scss';
 import { SearchIcon } from '../../assets';
 import { useChangeInput } from '../../hooks/useChangeInput';
 import useDebounce from '../../hooks/useDebounce';
+import MainContainer from '../../components/Common/MainContainer/MainContainer';
 
 const Home = () => {
   const [diary, setDiary] = useRecoilState(diaryListState);
@@ -33,7 +34,7 @@ const Home = () => {
   }, [localStorageId, setDiary]);
 
   return (
-    <main className={styles.main}>
+    <MainContainer>
       <div className={styles.titleBox}>
         <span>My Diary</span>
 
@@ -54,7 +55,7 @@ const Home = () => {
         </div>
       </div>
       <ContentContainer />
-    </main>
+    </MainContainer>
   );
 };
 
