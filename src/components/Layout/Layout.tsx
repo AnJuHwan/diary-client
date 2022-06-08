@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
-import { useSetRecoilState } from 'recoil';
+import { useRecoilState } from 'recoil';
 import { userState } from '../../recoil/user';
 import { userInfo } from '../../services/sign';
 import Header from '../Header/Header';
@@ -8,7 +8,7 @@ import styles from './layout.module.scss';
 
 const Layout = () => {
   const localStorageId = localStorage.getItem('id');
-  const setUser = useSetRecoilState(userState);
+  const [user, setUser] = useRecoilState(userState);
 
   useEffect(() => {
     const getUserData = async () => {
@@ -19,7 +19,7 @@ const Layout = () => {
     };
 
     getUserData();
-  }, [localStorageId, setUser]);
+  }, [localStorageId, setUser, user]);
 
   return (
     <div className={styles.app}>

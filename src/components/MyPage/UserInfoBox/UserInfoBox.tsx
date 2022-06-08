@@ -22,7 +22,7 @@ const UserInfoBox = ({ userValue, category }: IProps) => {
         {userValue}
       </button>
 
-      {visibleModal && <InfoChange userValue={userValue} setVisibleModal={closeModalHandler} />}
+      {visibleModal && <InfoChange category={category} userValue={userValue} setVisibleModal={closeModalHandler} />}
     </div>
   );
 };

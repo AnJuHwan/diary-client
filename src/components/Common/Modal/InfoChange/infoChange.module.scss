@@ -35,5 +35,10 @@
       background-color: colors.$GRAYD;
       border-radius: 10px;
     }
+
+    .errorMessage {
+      margin-top: 10px;
+      color: colors.$RED;
+    }
   }
 }

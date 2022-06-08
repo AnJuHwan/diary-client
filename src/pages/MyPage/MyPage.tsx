@@ -12,9 +12,9 @@ const MyPage = () => {
       {/* <h1>Profile</h1> */}
       <div className={styles.inputWrap}>
         <UserInfoBox userValue={userValue.nickName} category='Nickname' />
-        <UserInfoBox userValue={userValue.profile} category='Image' />
         <UserInfoBox userValue={userValue.email} category='Email' />
         <UserInfoBox userValue='' category='Password' />
+        <UserInfoBox userValue={userValue.profile} category='Image' />
       </div>
     </MainContainer>
   );
