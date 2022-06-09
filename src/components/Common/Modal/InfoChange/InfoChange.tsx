@@ -1,8 +1,11 @@
+import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import ReactDOM from 'react-dom';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
+import { imageLoading } from '../../../../recoil/loading';
 import { userState } from '../../../../recoil/user';
-import { userNicknameUpdate } from '../../../../services/userUpdate';
+import { userNicknameUpdate, userProfileUpdate } from '../../../../services/userUpdate';
+import { storage } from '../../../../utils/firebase';
 import styles from './infoChange.module.scss';
 
 interface IProps {
@@ -19,6 +22,8 @@ const InfoChange = ({ setVisibleModal, userValue, type = 'text', category }: IPr
   const [inputValue, setInputValue] = useState(userValue);
   const [message, setMessage] = useState('');
   const [userInfo, setUserInfo] = useRecoilState(userState);
+  const [image, setImage] = useState<null | Blob | Uint8Array | ArrayBuffer>(null);
+  const setLoading = useSetRecoilState(imageLoading);
 
   useEffect(() => {
     const closeDropdownHandler = (event: MouseEvent): void => {
@@ -34,39 +39,88 @@ const InfoChange = ({ setVisibleModal, userValue, type = 'text', category }: IPr
   }, [setVisibleModal]);
 
   const changeUserInfoHandler = async () => {
-    const keyValue = {
-      Nickname: { ...userInfo, nickname: inputValue },
-      Image: { ...userInfo, profile: inputValue },
-      Email: { ...userInfo, email: inputValue },
-    }[category];
+    if (category === 'Image') {
+      try {
+        setLoading(true);
+        if (image == null) return;
+        const imageRef = ref(storage, `images/${userInfo.nickName}`);
+        uploadBytes(imageRef, image).then(() => {
+          getDownloadURL(imageRef).then((item) => {
+            if (localStorageId) {
+              userProfileUpdate(localStorageId, item);
+            }
+            setUserInfo({ ...userInfo, profile: item });
+          });
+          setLoading(false);
+        });
+        setVisibleModal(false);
+        return;
+      } catch (error: any) {
+        // eslint-disable-next-line no-console
+        console.log(error.message);
+      }
+    }
 
     if (inputValue.trim().length === 0) {
-      setMessage('닉네임을 입력해주세요.');
+      setMessage('값을 입력해주세요.');
       return;
     }
 
-    if (localStorageId) {
-      try {
-        const updateNickname = await userNicknameUpdate(localStorageId, inputValue);
-        if (updateNickname.success) {
-          setVisibleModal(false);
-          setMessage('');
-          setUserInfo(keyValue!);
+    if (category === 'Nickname') {
+      if (localStorageId) {
+        try {
+          const updateNickname = await userNicknameUpdate(localStorageId, inputValue);
+          if (updateNickname.success) {
+            setVisibleModal(false);
+            setMessage('');
+            setUserInfo({ ...userInfo, nickName: inputValue });
+          }
+        } catch (error: any) {
+          setMessage(error.message);
         }
-      } catch (error: any) {
-        setMessage(error.message);
       }
     }
+
+    // if (category === 'Password') {
+    //   if (localStorageId) {
+    //     try {
+    //       const updateNickname = await userNicknameUpdate(localStorageId, inputValue);
+    //       if (updateNickname.success) {
+    //         setVisibleModal(false);
+    //         setMessage('');
+    //         setUserInfo({ ...userInfo, nickName: inputValue });
+    //       }
+    //     } catch (error: any) {
+    //       setMessage(error.message);
+    //     }
+    //   }
+    // }
+  };
+
+  const basicImageHandler = () => {
+    if (!localStorageId) return;
+    userProfileUpdate(localStorageId, '');
+    setUserInfo({ ...userInfo, profile: '' });
+    setVisibleModal(false);
   };
 
   const inputChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    if (category === 'Image') {
+      setImage(e.currentTarget.files![0]);
+      return;
+    }
     setInputValue(e.currentTarget.value);
   };
 
   return ReactDOM.createPortal(
     <div className={styles.wrapper}>
       <div className={styles.modal} ref={modalRef}>
-        <input type={type} value={inputValue} onChange={inputChangeHandler} />
+        <input type={type} accept='image/*' onChange={inputChangeHandler} />
+        {type === 'file' && (
+          <button type='button' onClick={basicImageHandler}>
+            기본이미지 변경
+          </button>
+        )}
         <button type='button' onClick={changeUserInfoHandler}>
           변경
         </button>
