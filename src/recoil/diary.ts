@@ -15,3 +15,8 @@ export const diaryDetailState = atom<IDetailData>({
   key: '#diaryEditInputValueState',
   default: { title: '', content: '', id: '', userId: '' },
 });
+
+export const diaryPublicState = atom<string>({
+  key: '#diaryPublicState',
+  default: 'private',
+});

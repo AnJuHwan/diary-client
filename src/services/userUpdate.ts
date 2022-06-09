@@ -26,3 +26,16 @@ export const userProfileUpdate = async (id: string, profile: string) => {
     throw new Error(error.response.data.message);
   }
 };
+
+export const userPasswordUpdate = async (id: string, password: string) => {
+  try {
+    const response = await axios.put<ISign>(`https://wanted-jh.herokuapp.com/users/update/password`, {
+      id,
+      password,
+    });
+    const { data } = response;
+    return data;
+  } catch (error: any) {
+    throw new Error(error.response.data.message);
+  }
+};

@@ -6,6 +6,9 @@ interface IPostParams {
   userId: string;
   title: string;
   content: string;
+  postImage: string;
+  sharePost: string;
+  date: string;
 }
 
 interface IEditParams {

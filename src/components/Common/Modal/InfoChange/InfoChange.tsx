@@ -1,10 +1,12 @@
-import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import ReactDOM from 'react-dom';
+import { useNavigate } from 'react-router-dom';
 import { useRecoilState, useSetRecoilState } from 'recoil';
+import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
+
 import { imageLoading } from '../../../../recoil/loading';
 import { userState } from '../../../../recoil/user';
-import { userNicknameUpdate, userProfileUpdate } from '../../../../services/userUpdate';
+import { userNicknameUpdate, userPasswordUpdate, userProfileUpdate } from '../../../../services/userUpdate';
 import { storage } from '../../../../utils/firebase';
 import styles from './infoChange.module.scss';
 
@@ -24,6 +26,8 @@ const InfoChange = ({ setVisibleModal, userValue, type = 'text', category }: IPr
   const [userInfo, setUserInfo] = useRecoilState(userState);
   const [image, setImage] = useState<null | Blob | Uint8Array | ArrayBuffer>(null);
   const setLoading = useSetRecoilState(imageLoading);
+  const navigate = useNavigate();
+  const { _id: id } = userInfo;
 
   useEffect(() => {
     const closeDropdownHandler = (event: MouseEvent): void => {
@@ -39,11 +43,13 @@ const InfoChange = ({ setVisibleModal, userValue, type = 'text', category }: IPr
   }, [setVisibleModal]);
 
   const changeUserInfoHandler = async () => {
+    if (!localStorageId) return;
+
     if (category === 'Image') {
       try {
         setLoading(true);
         if (image == null) return;
-        const imageRef = ref(storage, `images/${userInfo.nickName}`);
+        const imageRef = ref(storage, `images/profile/${id}`);
         uploadBytes(imageRef, image).then(() => {
           getDownloadURL(imageRef).then((item) => {
             if (localStorageId) {
@@ -56,8 +62,7 @@ const InfoChange = ({ setVisibleModal, userValue, type = 'text', category }: IPr
         setVisibleModal(false);
         return;
       } catch (error: any) {
-        // eslint-disable-next-line no-console
-        console.log(error.message);
+        setMessage(error.message);
       }
     }
 
@@ -67,34 +72,31 @@ const InfoChange = ({ setVisibleModal, userValue, type = 'text', category }: IPr
     }
 
     if (category === 'Nickname') {
-      if (localStorageId) {
-        try {
-          const updateNickname = await userNicknameUpdate(localStorageId, inputValue);
-          if (updateNickname.success) {
-            setVisibleModal(false);
-            setMessage('');
-            setUserInfo({ ...userInfo, nickName: inputValue });
-          }
-        } catch (error: any) {
-          setMessage(error.message);
+      try {
+        const updateNickname = await userNicknameUpdate(localStorageId, inputValue);
+        if (updateNickname.success) {
+          setVisibleModal(false);
+          setMessage('');
+          setUserInfo({ ...userInfo, nickName: inputValue });
         }
+      } catch (error: any) {
+        setMessage(error.message);
       }
     }
 
-    // if (category === 'Password') {
-    //   if (localStorageId) {
-    //     try {
-    //       const updateNickname = await userNicknameUpdate(localStorageId, inputValue);
-    //       if (updateNickname.success) {
-    //         setVisibleModal(false);
-    //         setMessage('');
-    //         setUserInfo({ ...userInfo, nickName: inputValue });
-    //       }
-    //     } catch (error: any) {
-    //       setMessage(error.message);
-    //     }
-    //   }
-    // }
+    if (category === 'Password') {
+      try {
+        const updatePassword = await userPasswordUpdate(localStorageId, inputValue);
+        if (updatePassword.success) {
+          setVisibleModal(false);
+          setMessage('');
+          localStorage.removeItem('id');
+          navigate('/signin');
+        }
+      } catch (error: any) {
+        setMessage(error.message);
+      }
+    }
   };
 
   const basicImageHandler = () => {

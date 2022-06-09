@@ -65,7 +65,7 @@ const DetailDiary = () => {
           <h2>제목</h2>
           <div className={styles.title}>{dTitle}</div>
           <h2>내용</h2>
-          <div className={styles.content}>{dContent}</div>
+          <textarea className={styles.content} value={dContent} readOnly />
           <div className={styles.buttonBox}>
             <Link to={`/edit/${params.id}`} className={styles.link}>
               Edit
