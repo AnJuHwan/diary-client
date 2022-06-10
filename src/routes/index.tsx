@@ -6,6 +6,7 @@ import DetailDiary from '../pages/DetailDiary/DetailDiary';
 import EditDiary from '../pages/EditDiary/EditDiary';
 import Home from '../pages/Home/Home';
 import MyPage from '../pages/MyPage/MyPage';
+import PublicDiary from '../pages/PublicDiary/PublicDiary';
 import Signin from '../pages/SignIn/Signin';
 import Signup from '../pages/Signup/Signup';
 
@@ -18,6 +19,7 @@ const RootRoute = () => {
         <Route path='/detail/:id' element={<DetailDiary />} />
         <Route path='/edit/:id' element={<EditDiary />} />
         <Route path='my' element={<MyPage />} />
+        <Route path='public' element={<PublicDiary />} />
       </Route>
 
       <Route path='/' element={<SignLayout />}>

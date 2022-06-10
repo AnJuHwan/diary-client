@@ -1,19 +1,19 @@
 import { ChangeEvent, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useRecoilState, useRecoilValue } from 'recoil';
+import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { diaryDetailState, diaryPublicState } from '../../recoil/diary';
 import { editDiary, getDetailDiary } from '../../services/diary';
 import { IDetailData } from '../../types/diary';
+import { nowDate } from '../../utils/dayjs';
+import { storage } from '../../utils/firebase';
 import Loading from '../../components/Common/Loading/Loading';
-import Modal from '../../components/Common/Modal/Modal';
-import styles from './editDiary.module.scss';
 import DiaryButton from '../../components/Common/DiaryButton/DiaryButton';
+import Modal from '../../components/Common/Modal/Modal';
 import MainContainer from '../../components/Common/MainContainer/MainContainer';
 import ShareDiarySelect from '../../components/Common/ShareDiarySelect/ShareDiarySelect';
 import FileInput from '../../components/Common/Input/FileInput';
-import { nowDate } from '../../utils/dayjs';
-import { storage } from '../../utils/firebase';
-import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
+import styles from './editDiary.module.scss';
 
 let timer: NodeJS.Timeout;
 const EditDiary = () => {

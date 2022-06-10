@@ -35,6 +35,20 @@ export const getMyDiary = async (id: string) => {
   }
 };
 
+export const getPublicDiary = async () => {
+  try {
+    const response = await axios.get<IDiaryList>(`${BASEURL}/post/public/get`);
+    const { data } = response;
+    const { postItem } = data;
+    const newArray: IDiary[] = [];
+    if (!postItem) return null;
+
+    return newArray.concat(postItem);
+  } catch (error) {
+    throw new Error('server Error');
+  }
+};
+
 export const uploadDiary = async (params: IPostParams) => {
   try {
     const response = await axios.post<IDiaryList>(`${BASEURL}/post/upload`, params);

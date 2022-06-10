@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useSetRecoilState } from 'recoil';
-import Loading from '../../components/Common/Loading/Loading';
-import Modal from '../../components/Common/Modal/Modal';
-import Input from '../../components/Sign/Input/Input';
 import { useChangeInput } from '../../hooks/useChangeInput';
 import { userState } from '../../recoil/user';
 import { isIdChecked, isNicknameChecked, userSignup } from '../../services/sign';
 import { cx } from '../../styles';
+import Loading from '../../components/Common/Loading/Loading';
+import Modal from '../../components/Common/Modal/Modal';
+import Input from '../../components/Sign/Input/Input';
 import styles from './signup.module.scss';
 
 const Signup = () => {

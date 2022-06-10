@@ -24,7 +24,7 @@ const CreateDiary = () => {
   const titleValue = useChangeInput('');
   const contentValue = useChangeInput('');
   const { state, stateChangeHandler } = titleValue;
-  const { state: contentState, stateChangeHandler: contetnHandler } = contentValue;
+  const { state: contentState, stateChangeHandler: contentHandler } = contentValue;
   const localStorageId = localStorage.getItem('id');
 
   useEffect(() => {
@@ -103,7 +103,7 @@ const CreateDiary = () => {
         <h2>내용</h2>
         <textarea
           value={contentState}
-          onChange={contetnHandler}
+          onChange={contentHandler}
           autoComplete='off'
           placeholder='내용을 입력해주세요.'
           className={styles.contentInput}

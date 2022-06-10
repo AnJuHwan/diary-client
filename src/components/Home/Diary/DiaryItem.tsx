@@ -1,6 +1,5 @@
 import { useNavigate } from 'react-router-dom';
 import { DefaultIcon } from '../../../assets';
-
 import { IDiary } from '../../../types/diary';
 import styles from './diary.module.scss';
 

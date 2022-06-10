@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
-import Modal from '../../components/Common/Modal/Modal';
 import { diaryDetailState } from '../../recoil/diary';
 import { deleteDiary, getDetailDiary } from '../../services/diary';
 import { IDetailData } from '../../types/diary';
+import Modal from '../../components/Common/Modal/Modal';
 import styles from './detailDiary.module.scss';
 
 let timer: NodeJS.Timeout;
@@ -71,12 +71,16 @@ const DetailDiary = () => {
           {image && <img className={styles.postImage} src={image} alt='다이어리 이미지' />}
 
           <div className={styles.buttonBox}>
-            <Link to={`/edit/${params.id}`} className={styles.link}>
-              Edit
-            </Link>
-            <button type='button' onClick={deleteDiaryHandler}>
-              Delete
-            </button>
+            {localStorageId === detail.userId && (
+              <>
+                <Link to={`/edit/${params.id}`} className={styles.link}>
+                  Edit
+                </Link>
+                <button type='button' onClick={deleteDiaryHandler}>
+                  Delete
+                </button>
+              </>
+            )}
           </div>
         </div>
       )}

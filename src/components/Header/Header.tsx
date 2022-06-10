@@ -28,9 +28,14 @@ const Header = () => {
   return (
     <header className={styles.header}>
       <div className={styles.divBox}>
-        <Link to='/' className={styles.homeLink}>
-          Home
-        </Link>
+        <div>
+          <Link to='/' className={styles.homeLink}>
+            Home
+          </Link>
+          <Link to='/public' className={styles.homeLink}>
+            Public Diary
+          </Link>
+        </div>
         <div className={styles.profileBox}>
           {userInfo.profile ? <img className={styles.profile} src={userInfo.profile} alt='profile' /> : <DefaultIcon />}
           {localStorageItem && <span>{userInfo.nickName} 님</span>}

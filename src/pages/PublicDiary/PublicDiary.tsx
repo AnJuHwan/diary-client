@@ -2,20 +2,19 @@ import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import { diaryFilterListState, diaryListState } from '../../recoil/diary';
-import { getMyDiary } from '../../services/diary';
-import styles from './home.module.scss';
-import { SearchIcon } from '../../assets';
+import { getPublicDiary } from '../../services/diary';
 import { useChangeInput } from '../../hooks/useChangeInput';
 import useDebounce from '../../hooks/useDebounce';
-import ContentContainer from '../../components/Home/ContentContainer/ContentContainer';
+import { SearchIcon } from '../../assets';
 import MainContainer from '../../components/Common/MainContainer/MainContainer';
+import ContentContainer from '../../components/Home/ContentContainer/ContentContainer';
+import styles from './publicDiary.module.scss';
 
-const Home = () => {
+const PublicDiary = () => {
+  const diaryFilterList = useSetRecoilState(diaryFilterListState);
   const [diary, setDiary] = useRecoilState(diaryListState);
-  const localStorageId = localStorage.getItem('id');
   const { state, stateChangeHandler } = useChangeInput('');
   const debounce = useDebounce(state);
-  const diaryFilterList = useSetRecoilState(diaryFilterListState);
 
   useEffect(() => {
     const filterList = diary.filter((item) => item.title === state);
@@ -24,20 +23,18 @@ const Home = () => {
 
   useEffect(() => {
     const getDiaryData = async () => {
-      if (localStorageId) {
-        const diaryDatas = await getMyDiary(localStorageId);
-        if (!diaryDatas) return;
-        setDiary(diaryDatas);
-      }
+      const diaryDatas = await getPublicDiary();
+      if (!diaryDatas) return;
+      setDiary(diaryDatas);
     };
     getDiaryData();
-  }, [localStorageId, setDiary]);
+  }, [setDiary]);
 
   return (
     <MainContainer>
       <div className={styles.titleBox}>
         <div className={styles.diaryTop}>
-          <span>My Diary</span>
+          <span>Public Diary</span>
           <Link to='/create' className={styles.createLink}>
             Create Diary
           </Link>
@@ -61,4 +58,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default PublicDiary;

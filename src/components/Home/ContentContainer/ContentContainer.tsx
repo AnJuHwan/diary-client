@@ -3,6 +3,10 @@ import { diaryFilterListState, diaryListState } from '../../../recoil/diary';
 import DiaryItem from '../Diary/DiaryItem';
 import styles from './contentContainer.module.scss';
 
+// interface IProps {
+//   diary: IDiary[];
+// }
+
 const ContentContainer = () => {
   const diaryList = useRecoilValue(diaryListState);
   const diaryFilterList = useRecoilValue(diaryFilterListState);

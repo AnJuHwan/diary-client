@@ -1,0 +1,57 @@
+@use '/src/styles/constants/colors';
+
+.searchCreateBox {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  .inputBox {
+    position: relative;
+    width: 600px;
+    height: 100%;
+
+    .searchIcon {
+      position: absolute;
+      top: 3px;
+      left: 2px;
+      width: 36px;
+      height: 36px;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px 10px 10px 40px;
+      border: 1px solid colors.$GRAYD;
+      border-radius: 4px;
+    }
+  }
+}
+
+.titleBox {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 470px;
+  margin-top: 30px;
+  margin-bottom: 20px;
+
+  .diaryTop {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+
+    span {
+      font-size: 24px;
+      font-weight: 700;
+    }
+
+    .createLink {
+      padding: 12px 15px;
+      font-size: 16px;
+      color: colors.$WHITE;
+      background-color: colors.$MAIN;
+      border-radius: 10px;
+    }
+  }
+}

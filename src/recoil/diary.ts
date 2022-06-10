@@ -11,6 +11,11 @@ export const diaryFilterListState = atom<IDiary[]>({
   default: [],
 });
 
+export const publicDiaryListState = atom<IDiary[]>({
+  key: '#publicDiaryListState',
+  default: [],
+});
+
 export const diaryDetailState = atom<IDetailData>({
   key: '#diaryEditInputValueState',
   default: { title: '', content: '', id: '', userId: '', postImage: '', sharePost: '', date: '' },

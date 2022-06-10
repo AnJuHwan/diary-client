@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
+import { userState } from '../../recoil/user';
 import MainContainer from '../../components/Common/MainContainer/MainContainer';
 import Modal from '../../components/Common/Modal/Modal';
 import UserInfoBox from '../../components/MyPage/UserInfoBox/UserInfoBox';
-import { userState } from '../../recoil/user';
 import styles from './myPage.module.scss';
 
 let timer: NodeJS.Timeout;

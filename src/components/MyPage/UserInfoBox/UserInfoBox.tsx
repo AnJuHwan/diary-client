@@ -1,10 +1,10 @@
 import { useState } from 'react';
-import styles from './userInfoBox.module.scss';
-import InfoChange from '../../Common/Modal/InfoChange/InfoChange';
 import { useRecoilValue } from 'recoil';
 import { userState } from '../../../recoil/user';
 import { imageLoading } from '../../../recoil/loading';
+import InfoChange from '../../Common/Modal/InfoChange/InfoChange';
 import Loading from '../../Common/Loading/Loading';
+import styles from './userInfoBox.module.scss';
 
 interface IProps {
   userValue: string;
