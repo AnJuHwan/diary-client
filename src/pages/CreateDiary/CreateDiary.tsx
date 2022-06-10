@@ -42,26 +42,37 @@ const CreateDiary = () => {
     };
   }, [localStorageId, navigate]);
 
-  const uploadClickHandler = () => {
+  const uploadClickHandler = async () => {
+    if (!localStorageId) return;
     try {
-      console.log('as');
-      if (image == null) return;
-      console.log('asdf');
+      if (image == null) {
+        const upload = await uploadDiary({
+          userId: localStorageId,
+          title: state,
+          content: contentState,
+          postImage: '',
+          sharePost: diaryPublic,
+          date: nowDate,
+        });
+        if (upload.success) {
+          navigate('/');
+        }
+        return;
+      }
+
       const imageRef = ref(storage, `images/diary/${localStorageId}/${state}`);
       uploadBytes(imageRef, image).then(() => {
         getDownloadURL(imageRef).then(async (item) => {
-          if (localStorageId) {
-            const upload = await uploadDiary({
-              userId: localStorageId,
-              title: state,
-              content: contentState,
-              postImage: item,
-              sharePost: diaryPublic,
-              date: nowDate,
-            });
-            if (upload.success) {
-              navigate('/');
-            }
+          const upload = await uploadDiary({
+            userId: localStorageId,
+            title: state,
+            content: contentState,
+            postImage: item,
+            sharePost: diaryPublic,
+            date: nowDate,
+          });
+          if (upload.success) {
+            navigate('/');
           }
         });
       });

@@ -8,6 +8,9 @@ export interface IDiary {
   userId: string;
   title: string;
   content: string;
+  postImage: string;
+  sharePost: string;
+  date: string;
 }
 
 export interface IDetailData {

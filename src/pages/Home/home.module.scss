@@ -30,20 +30,28 @@
 .titleBox {
   display: flex;
   flex-direction: column;
-  width: 80%;
+  width: 100%;
+  max-width: 470px;
+  margin-top: 30px;
   margin-bottom: 20px;
 
-  span {
+  .diaryTop {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     margin-bottom: 20px;
-    font-size: 24px;
-    font-weight: 700;
-  }
 
-  .createLink {
-    padding: 12px 15px;
-    font-size: 16px;
-    color: colors.$WHITE;
-    background-color: colors.$MAIN;
-    border-radius: 10px;
+    span {
+      font-size: 24px;
+      font-weight: 700;
+    }
+
+    .createLink {
+      padding: 12px 15px;
+      font-size: 16px;
+      color: colors.$WHITE;
+      background-color: colors.$MAIN;
+      border-radius: 10px;
+    }
   }
 }

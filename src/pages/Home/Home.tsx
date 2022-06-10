@@ -36,7 +36,12 @@ const Home = () => {
   return (
     <MainContainer>
       <div className={styles.titleBox}>
-        <span>My Diary</span>
+        <div className={styles.diaryTop}>
+          <span>My Diary</span>
+          <Link to='/create' className={styles.createLink}>
+            Create Diary
+          </Link>
+        </div>
 
         <div className={styles.searchCreateBox}>
           <div className={styles.inputBox}>
@@ -49,9 +54,6 @@ const Home = () => {
               onChange={stateChangeHandler}
             />
           </div>
-          <Link to='/create' className={styles.createLink}>
-            Create Diary
-          </Link>
         </div>
       </div>
       <ContentContainer />
