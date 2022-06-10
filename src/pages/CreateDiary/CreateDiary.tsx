@@ -2,7 +2,6 @@ import { ChangeEvent, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
-
 import { useChangeInput } from '../../hooks/useChangeInput';
 import { uploadDiary } from '../../services/diary';
 import styles from './createDiary.module.scss';
@@ -17,16 +16,16 @@ import { nowDate } from '../../utils/dayjs';
 
 let timer: NodeJS.Timeout;
 const CreateDiary = () => {
+  const diaryPublic = useRecoilValue(diaryPublicState);
   const [visibleModal, setVisibleModal] = useState(false);
+  const [message, setMessage] = useState('');
+  const [image, setImage] = useState<null | Blob | Uint8Array | ArrayBuffer>(null);
   const navigate = useNavigate();
   const titleValue = useChangeInput('');
   const contentValue = useChangeInput('');
   const { state, stateChangeHandler } = titleValue;
   const { state: contentState, stateChangeHandler: contetnHandler } = contentValue;
   const localStorageId = localStorage.getItem('id');
-  const [message, setMessage] = useState('');
-  const [image, setImage] = useState<null | Blob | Uint8Array | ArrayBuffer>(null);
-  const diaryPublic = useRecoilValue(diaryPublicState);
 
   useEffect(() => {
     if (!localStorageId) {
@@ -53,6 +52,7 @@ const CreateDiary = () => {
           postImage: '',
           sharePost: diaryPublic,
           date: nowDate,
+          writer: localStorageId,
         });
         if (upload.success) {
           navigate('/');
@@ -70,6 +70,7 @@ const CreateDiary = () => {
             postImage: item,
             sharePost: diaryPublic,
             date: nowDate,
+            writer: localStorageId,
           });
           if (upload.success) {
             navigate('/');

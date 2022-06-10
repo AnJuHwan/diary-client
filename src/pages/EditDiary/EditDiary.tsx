@@ -1,7 +1,7 @@
 import { ChangeEvent, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useRecoilState } from 'recoil';
-import { diaryDetailState } from '../../recoil/diary';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { diaryDetailState, diaryPublicState } from '../../recoil/diary';
 import { editDiary, getDetailDiary } from '../../services/diary';
 import { IDetailData } from '../../types/diary';
 import Loading from '../../components/Common/Loading/Loading';
@@ -9,6 +9,11 @@ import Modal from '../../components/Common/Modal/Modal';
 import styles from './editDiary.module.scss';
 import DiaryButton from '../../components/Common/DiaryButton/DiaryButton';
 import MainContainer from '../../components/Common/MainContainer/MainContainer';
+import ShareDiarySelect from '../../components/Common/ShareDiarySelect/ShareDiarySelect';
+import FileInput from '../../components/Common/Input/FileInput';
+import { nowDate } from '../../utils/dayjs';
+import { storage } from '../../utils/firebase';
+import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 
 let timer: NodeJS.Timeout;
 const EditDiary = () => {
@@ -20,6 +25,8 @@ const EditDiary = () => {
   const localStorageId = localStorage.getItem('id');
   const [visibleModal, setVisibleModal] = useState(false);
   const [message, setMessage] = useState('');
+  const [editImage, setEditImage] = useState<null | Blob | Uint8Array | ArrayBuffer>(null);
+  const diaryPublic = useRecoilValue(diaryPublicState);
 
   useEffect(() => {
     if (!localStorageId) {
@@ -39,9 +46,9 @@ const EditDiary = () => {
     const getDetailDiaryItem = async () => {
       if (params.id) {
         const detailDiary = await getDetailDiary(params.id);
-        const { _id: id, title, content, userId } = detailDiary.postItem;
+        const { _id: id, title, content, userId, postImage, sharePost, date } = detailDiary.postItem;
         if (detailDiary.success && detailDiary.postItem) {
-          setDetail({ id, title, content, userId });
+          setDetail({ id, title, content, userId, postImage, sharePost, date });
         }
       }
     };
@@ -57,19 +64,51 @@ const EditDiary = () => {
   };
 
   const editDiaryHandler = async () => {
+    if (!params.id) return;
     try {
       setIsLoading(true);
-      if (params.id) {
-        const editItem = await editDiary({ id: params.id, title: detail.title, content: detail.content });
+      if (editImage == null) {
+        const editItem = await editDiary({
+          id: params.id,
+          title: detail.title,
+          content: detail.content,
+          postImage: '',
+          sharePost: diaryPublic,
+          date: nowDate,
+        });
         if (editItem.success) {
           navigate(`/detail/${params.id}`);
         }
+        return;
       }
+
+      const imageRef = ref(storage, `images/diary/${localStorageId}/${detail.title}`);
+      uploadBytes(imageRef, editImage).then(() => {
+        getDownloadURL(imageRef).then(async (item) => {
+          if (!params.id) return;
+          const editItem = await editDiary({
+            id: params.id,
+            title: detail.title,
+            content: detail.content,
+            postImage: item,
+            sharePost: diaryPublic,
+            date: nowDate,
+          });
+
+          if (editItem.success) {
+            navigate('/');
+          }
+        });
+      });
     } catch (error) {
       setMessage('서버에 문제가 있습니다.');
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const inputChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    setEditImage(e.currentTarget.files![0]);
   };
 
   return (
@@ -93,6 +132,9 @@ const EditDiary = () => {
             placeholder='내용을 입력해주세요.'
             className={styles.contentInput}
           />
+          <ShareDiarySelect />
+
+          <FileInput onChange={inputChangeHandler} />
           <DiaryButton onClick={editDiaryHandler} text='Edit Confirm' />
 
           {isLoading && <Loading />}

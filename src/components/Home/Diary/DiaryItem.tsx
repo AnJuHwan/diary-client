@@ -1,12 +1,11 @@
 import { useNavigate } from 'react-router-dom';
-import { createSecureContext } from 'tls';
+import { DefaultIcon } from '../../../assets';
 
 import { IDiary } from '../../../types/diary';
 import styles from './diary.module.scss';
 
 interface IProps {
   diary: IDiary;
-  // onClick: (id: string) => void;
   id: string;
 }
 
@@ -17,13 +16,22 @@ const DiaryItem = ({ diary, id }: IProps) => {
     navigate(`/detail/${id}`);
   };
 
-  console.log(diary);
-
   return (
     <li className={styles.diaryItem}>
       <button type='button' onClick={diaryClickHandler}>
-        {diary.postImage && <img src={diary.postImage} alt='none' className={styles.image} />}
-        제목: {diary.title}
+        <div className={styles.diaryItemTop}>
+          <div className={styles.userInfoBox}>
+            {diary.writer && diary.writer.profile ? (
+              <img className={styles.profile} src={diary.writer.profile} alt='profile' />
+            ) : (
+              <DefaultIcon />
+            )}
+            <span>{diary.writer && diary.writer.nickName} 님</span>
+          </div>
+          <span>{diary.date}</span>
+        </div>
+        {diary.postImage && <img src={diary.postImage} alt='이미지 찾을 수 없음' className={styles.image} />}
+        <h2 className={styles.diaryTitle}>{diary.title}</h2>
       </button>
     </li>
   );

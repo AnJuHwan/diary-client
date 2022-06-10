@@ -11,6 +11,13 @@ export interface IDiary {
   postImage: string;
   sharePost: string;
   date: string;
+  writer: IWriter;
+}
+
+export interface IWriter {
+  email: string;
+  nickName: string;
+  profile: string;
 }
 
 export interface IDetailData {
@@ -18,4 +25,7 @@ export interface IDetailData {
   title: string;
   content: string;
   userId: string;
+  postImage: string;
+  sharePost: string;
+  date: string;
 }

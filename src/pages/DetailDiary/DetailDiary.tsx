@@ -13,7 +13,8 @@ const DetailDiary = () => {
   const localStorageId = localStorage.getItem('id');
   const navigate = useNavigate();
   const [detail, setDetail] = useRecoilState<IDetailData>(diaryDetailState);
-  const { title: dTitle, content: dContent } = detail;
+  const { title: dTitle, content: dContent, postImage: image } = detail;
+
   const [visibleModal, setVisibleModal] = useState(false);
   const [message, setMessage] = useState('');
 
@@ -35,9 +36,9 @@ const DetailDiary = () => {
     const getDetailDiaryItem = async () => {
       if (params.id) {
         const detailDiary = await getDetailDiary(params.id);
-        const { _id: id, title, content, userId } = detailDiary.postItem;
+        const { _id: id, title, content, userId, postImage, sharePost, date } = detailDiary.postItem;
         if (detailDiary.success && detailDiary.postItem) {
-          setDetail({ id, title, content, userId });
+          setDetail({ id, title, content, userId, postImage, sharePost, date });
         }
       }
     };
@@ -66,6 +67,9 @@ const DetailDiary = () => {
           <div className={styles.title}>{dTitle}</div>
           <h2>내용</h2>
           <textarea className={styles.content} value={dContent} readOnly />
+
+          {image && <img className={styles.postImage} src={image} alt='다이어리 이미지' />}
+
           <div className={styles.buttonBox}>
             <Link to={`/edit/${params.id}`} className={styles.link}>
               Edit

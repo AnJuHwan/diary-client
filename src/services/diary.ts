@@ -9,12 +9,16 @@ interface IPostParams {
   postImage: string;
   sharePost: string;
   date: string;
+  writer: string;
 }
 
 interface IEditParams {
   id: string;
   title: string;
   content: string;
+  postImage: string;
+  sharePost: string;
+  date: string;
 }
 
 export const getMyDiary = async (id: string) => {
