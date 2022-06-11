@@ -5,7 +5,6 @@ import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { diaryDetailState, diaryPublicState } from '../../recoil/diary';
 import { editDiary, getDetailDiary } from '../../services/diary';
 import { IDetailData } from '../../types/diary';
-import { nowDate } from '../../utils/dayjs';
 import { storage } from '../../utils/firebase';
 import Loading from '../../components/Common/Loading/Loading';
 import DiaryButton from '../../components/Common/DiaryButton/DiaryButton';
@@ -14,6 +13,7 @@ import MainContainer from '../../components/Common/MainContainer/MainContainer';
 import ShareDiarySelect from '../../components/Common/ShareDiarySelect/ShareDiarySelect';
 import FileInput from '../../components/Common/Input/FileInput';
 import styles from './editDiary.module.scss';
+import dayjs from 'dayjs';
 
 let timer: NodeJS.Timeout;
 const EditDiary = () => {
@@ -64,9 +64,9 @@ const EditDiary = () => {
   };
 
   const editDiaryHandler = async () => {
+    setIsLoading(true);
     if (!params.id) return;
     try {
-      setIsLoading(true);
       if (editImage == null) {
         const editItem = await editDiary({
           id: params.id,
@@ -74,7 +74,7 @@ const EditDiary = () => {
           content: detail.content,
           postImage: '',
           sharePost: diaryPublic,
-          date: nowDate,
+          date: dayjs(new Date()).format('YYYY-MM-DD HH:mm'),
         });
         if (editItem.success) {
           navigate(`/detail/${params.id}`);
@@ -84,6 +84,7 @@ const EditDiary = () => {
 
       const imageRef = ref(storage, `images/diary/${localStorageId}/${detail.title}`);
       uploadBytes(imageRef, editImage).then(() => {
+        setIsLoading(true);
         getDownloadURL(imageRef).then(async (item) => {
           if (!params.id) return;
           const editItem = await editDiary({
@@ -92,7 +93,7 @@ const EditDiary = () => {
             content: detail.content,
             postImage: item,
             sharePost: diaryPublic,
-            date: nowDate,
+            date: dayjs(new Date()).format('YYYY-MM-DD HH:mm'),
           });
 
           if (editItem.success) {

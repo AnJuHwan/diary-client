@@ -13,6 +13,11 @@
     margin-right: 20px;
     font-size: 24px;
     color: colors.$GRAY2;
+
+    .logo {
+      width: 100px;
+      height: 100px;
+    }
   }
 
   .divBox {
@@ -20,8 +25,13 @@
     align-items: center;
     justify-content: space-between;
     width: 80%;
-    padding: 20px 0;
     margin: 0 auto;
+
+    .linkBox {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
   }
 
   .profileBox {

@@ -13,12 +13,14 @@ import DiaryButton from '../../components/Common/DiaryButton/DiaryButton';
 import MainContainer from '../../components/Common/MainContainer/MainContainer';
 import FileInput from '../../components/Common/Input/FileInput';
 import { nowDate } from '../../utils/dayjs';
+import Loading from '../../components/Common/Loading/Loading';
 
 let timer: NodeJS.Timeout;
 const CreateDiary = () => {
   const diaryPublic = useRecoilValue(diaryPublicState);
   const [visibleModal, setVisibleModal] = useState(false);
   const [message, setMessage] = useState('');
+  const [loading, setLoading] = useState(false);
   const [image, setImage] = useState<null | Blob | Uint8Array | ArrayBuffer>(null);
   const navigate = useNavigate();
   const titleValue = useChangeInput('');
@@ -44,6 +46,7 @@ const CreateDiary = () => {
   const uploadClickHandler = async () => {
     if (!localStorageId) return;
     try {
+      setLoading(true);
       if (image == null) {
         const upload = await uploadDiary({
           userId: localStorageId,
@@ -62,6 +65,7 @@ const CreateDiary = () => {
 
       const imageRef = ref(storage, `images/diary/${localStorageId}/${state}`);
       uploadBytes(imageRef, image).then(() => {
+        setLoading(true);
         getDownloadURL(imageRef).then(async (item) => {
           const upload = await uploadDiary({
             userId: localStorageId,
@@ -81,6 +85,8 @@ const CreateDiary = () => {
       return;
     } catch (error: any) {
       setMessage(error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -110,7 +116,7 @@ const CreateDiary = () => {
         />
         <ShareDiarySelect />
         <FileInput onChange={inputChangeHandler} />
-        <DiaryButton onClick={uploadClickHandler} text='Upload' />
+        {loading ? <Loading /> : <DiaryButton onClick={uploadClickHandler} text='Upload' />}
 
         {visibleModal && <Modal title='알림' desc={message} setVisibleModal={setVisibleModal} />}
       </div>

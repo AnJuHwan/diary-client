@@ -61,14 +61,13 @@ const DetailDiary = () => {
 
   return (
     <main className={styles.main}>
+      {image && <img className={styles.postImage} src={image} alt='다이어리 이미지' />}
       {dTitle && (
         <div className={styles.contentWrap}>
           <h2>제목</h2>
           <div className={styles.title}>{dTitle}</div>
           <h2>내용</h2>
           <textarea className={styles.content} value={dContent} readOnly />
-
-          {image && <img className={styles.postImage} src={image} alt='다이어리 이미지' />}
 
           <div className={styles.buttonBox}>
             {localStorageId === detail.userId && (

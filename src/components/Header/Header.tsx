@@ -2,7 +2,7 @@ import { useRecoilValue, useResetRecoilState } from 'recoil';
 import { Link, useNavigate } from 'react-router-dom';
 import { diaryListState } from '../../recoil/diary';
 import { userState } from '../../recoil/user';
-import { DefaultIcon } from '../../assets';
+import { DefaultIcon, Logo } from '../../assets';
 
 import styles from './header.module.scss';
 
@@ -28,9 +28,9 @@ const Header = () => {
   return (
     <header className={styles.header}>
       <div className={styles.divBox}>
-        <div>
+        <div className={styles.linkBox}>
           <Link to='/' className={styles.homeLink}>
-            Home
+            <Logo className={styles.logo} />
           </Link>
           <Link to='/public' className={styles.homeLink}>
             Public Diary
