@@ -7,8 +7,8 @@ import Header from '../Header/Header';
 import styles from './layout.module.scss';
 
 const Layout = () => {
-  const localStorageId = localStorage.getItem('id');
   const setUser = useSetRecoilState(userState);
+  const localStorageId = localStorage.getItem('id');
 
   useEffect(() => {
     const getUserData = async () => {

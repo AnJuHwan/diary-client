@@ -14,9 +14,9 @@ import Loading from '../../components/Common/Loading/Loading';
 const PublicDiary = () => {
   const diaryFilterList = useSetRecoilState(diaryFilterListState);
   const [diary, setDiary] = useRecoilState(diaryListState);
+  const [isLoading, setIsLoading] = useState(false);
   const { state, stateChangeHandler } = useChangeInput('');
   const debounce = useDebounce(state);
-  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const filterList = diary.filter((item) => item.title === state);

@@ -18,15 +18,15 @@ import dayjs from 'dayjs';
 let timer: NodeJS.Timeout;
 const EditDiary = () => {
   const [detail, setDetail] = useRecoilState<IDetailData>(diaryDetailState);
+  const diaryPublic = useRecoilValue(diaryPublicState);
   const { title: dTitle, content: dContent } = detail;
   const [isLoading, setIsLoading] = useState(false);
-  const params = useParams();
-  const navigate = useNavigate();
-  const localStorageId = localStorage.getItem('id');
   const [visibleModal, setVisibleModal] = useState(false);
   const [message, setMessage] = useState('');
   const [editImage, setEditImage] = useState<null | Blob | Uint8Array | ArrayBuffer>(null);
-  const diaryPublic = useRecoilValue(diaryPublicState);
+  const navigate = useNavigate();
+  const params = useParams();
+  const localStorageId = localStorage.getItem('id');
 
   useEffect(() => {
     if (!localStorageId) {

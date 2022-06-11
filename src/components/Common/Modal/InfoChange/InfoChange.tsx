@@ -19,14 +19,14 @@ interface IProps {
 }
 
 const InfoChange = ({ setVisibleModal, userValue, type = 'text', category }: IProps) => {
-  const modalRef = useRef<HTMLDivElement>(null);
-  const localStorageId = localStorage.getItem('id');
+  const [userInfo, setUserInfo] = useRecoilState(userState);
+  const setLoading = useSetRecoilState(imageLoading);
   const [inputValue, setInputValue] = useState(userValue);
   const [message, setMessage] = useState('');
-  const [userInfo, setUserInfo] = useRecoilState(userState);
   const [image, setImage] = useState<null | Blob | Uint8Array | ArrayBuffer>(null);
-  const setLoading = useSetRecoilState(imageLoading);
+  const modalRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
+  const localStorageId = localStorage.getItem('id');
   const { _id: id } = userInfo;
 
   useEffect(() => {

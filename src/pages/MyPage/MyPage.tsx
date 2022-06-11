@@ -10,10 +10,9 @@ import styles from './myPage.module.scss';
 let timer: NodeJS.Timeout;
 const MyPage = () => {
   const userValue = useRecoilValue(userState);
-  const localStorageId = localStorage.getItem('id');
-
   const [visibleModal, setVisibleModal] = useState(false);
   const navigate = useNavigate();
+  const localStorageId = localStorage.getItem('id');
 
   useEffect(() => {
     if (!localStorageId) {

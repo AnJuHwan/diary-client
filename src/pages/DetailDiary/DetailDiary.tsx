@@ -9,14 +9,13 @@ import styles from './detailDiary.module.scss';
 
 let timer: NodeJS.Timeout;
 const DetailDiary = () => {
-  const params = useParams();
-  const localStorageId = localStorage.getItem('id');
-  const navigate = useNavigate();
   const [detail, setDetail] = useRecoilState<IDetailData>(diaryDetailState);
-  const { title: dTitle, content: dContent, postImage: image } = detail;
-
   const [visibleModal, setVisibleModal] = useState(false);
   const [message, setMessage] = useState('');
+  const navigate = useNavigate();
+  const params = useParams();
+  const localStorageId = localStorage.getItem('id');
+  const { title: dTitle, content: dContent, postImage: image } = detail;
 
   useEffect(() => {
     if (!localStorageId) {

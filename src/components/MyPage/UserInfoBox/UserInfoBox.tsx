@@ -12,10 +12,10 @@ interface IProps {
 }
 
 const UserInfoBox = ({ userValue, category }: IProps) => {
-  const [visibleModal, setVisivleModal] = useState(false);
-  const [type, setType] = useState('');
   const userInfo = useRecoilValue(userState);
   const isLoading = useRecoilValue(imageLoading);
+  const [visibleModal, setVisivleModal] = useState(false);
+  const [type, setType] = useState('');
 
   const closeModalHandler = () => {
     setVisivleModal(false);

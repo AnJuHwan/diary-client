@@ -12,14 +12,12 @@ import styles from './signup.module.scss';
 
 const Signup = () => {
   const setUser = useSetRecoilState(userState);
-
   const [isIdCheckData, setIsIdCheckData] = useState(false);
   const [idError, setIdError] = useState('');
   const [isNicknameCheckData, setIsNicknameCheckData] = useState(false);
   const [nicknameError, setNicknameError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [visibleModal, setVisibleModal] = useState(false);
-
   const navigate = useNavigate();
   const idInput = useChangeInput('');
   const nicknameInput = useChangeInput('');

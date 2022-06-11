@@ -16,6 +16,7 @@ interface IProps {
 
 const Input = ({ value, onChange, onBlur, isError, title, id, icon = false, type, placeholder }: IProps) => {
   const [visiblePassword, setVisiblePassword] = useState(false);
+
   const visiblePasswordHandler = () => {
     if (setVisiblePassword) {
       setVisiblePassword((visible) => !visible);

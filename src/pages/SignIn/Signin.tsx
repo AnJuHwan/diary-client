@@ -15,11 +15,10 @@ const Signin = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [visibleModal, setVisibleModal] = useState(false);
-
+  const navigate = useNavigate();
   const idInput = useChangeInput('');
   const passwordInput = useChangeInput('');
   const signInValidation = idInput.state.trim().length !== 0 && passwordInput.state.trim().length !== 0;
-  const navigate = useNavigate();
 
   const signinClickHandler = async () => {
     setErrorMessage('');

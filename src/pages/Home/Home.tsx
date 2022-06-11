@@ -13,11 +13,11 @@ import Loading from '../../components/Common/Loading/Loading';
 
 const Home = () => {
   const [diary, setDiary] = useRecoilState(diaryListState);
-  const localStorageId = localStorage.getItem('id');
-  const { state, stateChangeHandler } = useChangeInput('');
-  const debounce = useDebounce(state);
   const diaryFilterList = useSetRecoilState(diaryFilterListState);
   const [isLoading, setIsLoading] = useState(false);
+  const { state, stateChangeHandler } = useChangeInput('');
+  const debounce = useDebounce(state);
+  const localStorageId = localStorage.getItem('id');
 
   useEffect(() => {
     const filterList = diary.filter((item) => item.title === state);
