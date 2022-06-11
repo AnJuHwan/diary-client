@@ -136,9 +136,8 @@ const EditDiary = () => {
           <ShareDiarySelect />
 
           <FileInput onChange={inputChangeHandler} />
-          <DiaryButton onClick={editDiaryHandler} text='Edit Confirm' />
 
-          {isLoading && <Loading />}
+          {isLoading ? <Loading /> : <DiaryButton onClick={editDiaryHandler} text='Edit Confirm' />}
           {visibleModal && <Modal title='알림' desc={message} setVisibleModal={setVisibleModal} />}
         </div>
       )}
