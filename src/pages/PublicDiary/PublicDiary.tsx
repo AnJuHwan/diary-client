@@ -19,7 +19,7 @@ const PublicDiary = () => {
   const debounce = useDebounce(state);
 
   useEffect(() => {
-    const filterList = diary.filter((item) => item.title === state);
+    const filterList = diary.filter((item) => item.title.includes(state));
     diaryFilterList(filterList);
   }, [debounce, diaryFilterList, diary, state]);
 

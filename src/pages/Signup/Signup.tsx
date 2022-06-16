@@ -30,7 +30,7 @@ const Signup = () => {
     isNicknameCheckData &&
     isPasswordValue &&
     passwordInput.state === passwordConfirmInput.state &&
-    passwordInput.state.length > 8;
+    passwordInput.state.length > 7;
 
   const signupClickHandler = async () => {
     try {
