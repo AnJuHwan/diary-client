@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
@@ -14,34 +14,21 @@ import MainContainer from '../../components/Common/MainContainer/MainContainer';
 import FileInput from '../../components/Common/Input/FileInput';
 import { nowDate } from '../../utils/dayjs';
 import Loading from '../../components/Common/Loading/Loading';
+import useIsLogin from '../../hooks/useIsLogin';
 
-let timer: NodeJS.Timeout;
 const CreateDiary = () => {
   const diaryPublic = useRecoilValue(diaryPublicState);
-  const [visibleModal, setVisibleModal] = useState(false);
-  const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
   const [image, setImage] = useState<null | Blob | Uint8Array | ArrayBuffer>(null);
   const navigate = useNavigate();
+  const { message, visibleModal, setVisibleModal, setMessage } = useIsLogin();
   const titleValue = useChangeInput('');
   const contentValue = useChangeInput('');
   const { state, stateChangeHandler } = titleValue;
   const { state: contentState, stateChangeHandler: contentHandler } = contentValue;
   const localStorageId = localStorage.getItem('id');
 
-  useEffect(() => {
-    if (!localStorageId) {
-      setVisibleModal(true);
-      setMessage('로그인을 한 후 이용해주세요.');
-      timer = setTimeout(() => {
-        navigate('/signin');
-      }, 1500);
-    }
-    return () => {
-      setVisibleModal(false);
-      clearTimeout(timer);
-    };
-  }, [localStorageId, navigate]);
+  useIsLogin();
 
   const uploadClickHandler = async () => {
     if (!localStorageId) return;

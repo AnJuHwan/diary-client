@@ -14,33 +14,20 @@ import ShareDiarySelect from '../../components/Common/ShareDiarySelect/ShareDiar
 import FileInput from '../../components/Common/Input/FileInput';
 import styles from './editDiary.module.scss';
 import dayjs from 'dayjs';
+import useIsLogin from '../../hooks/useIsLogin';
 
-let timer: NodeJS.Timeout;
 const EditDiary = () => {
   const [detail, setDetail] = useRecoilState<IDetailData>(diaryDetailState);
   const diaryPublic = useRecoilValue(diaryPublicState);
   const { title: dTitle, content: dContent } = detail;
   const [isLoading, setIsLoading] = useState(false);
-  const [visibleModal, setVisibleModal] = useState(false);
-  const [message, setMessage] = useState('');
   const [editImage, setEditImage] = useState<null | Blob | Uint8Array | ArrayBuffer>(null);
   const navigate = useNavigate();
   const params = useParams();
+  const { message, visibleModal, setVisibleModal, setMessage } = useIsLogin();
   const localStorageId = localStorage.getItem('id');
 
-  useEffect(() => {
-    if (!localStorageId) {
-      setVisibleModal(true);
-      setMessage('로그인 후 이용해주세요.');
-      timer = setTimeout(() => {
-        navigate('/signin');
-      }, 1500);
-    }
-    return () => {
-      setVisibleModal(false);
-      clearTimeout(timer);
-    };
-  }, [localStorageId, navigate]);
+  useIsLogin();
 
   useEffect(() => {
     const getDetailDiaryItem = async () => {
@@ -64,8 +51,13 @@ const EditDiary = () => {
   };
 
   const editDiaryHandler = async () => {
-    setIsLoading(true);
     if (!params.id) return;
+    if (!dTitle) {
+      setVisibleModal(true);
+      setMessage('제목을 입력해주세요.');
+      return;
+    }
+    setIsLoading(true);
     try {
       if (editImage == null) {
         const editItem = await editDiary({
@@ -114,33 +106,31 @@ const EditDiary = () => {
 
   return (
     <MainContainer>
-      {dTitle && (
-        <div className={styles.contentWrap}>
-          <h2>제목</h2>
-          <input
-            placeholder='제목을 입력해주세요.'
-            autoComplete='off'
-            id='search'
-            type='text'
-            value={dTitle}
-            onChange={titleChangeHandler}
-          />
-          <h2>내용</h2>
-          <textarea
-            value={dContent}
-            onChange={contentChangeHandler}
-            autoComplete='off'
-            placeholder='내용을 입력해주세요.'
-            className={styles.contentInput}
-          />
-          <ShareDiarySelect />
+      <div className={styles.contentWrap}>
+        <h2>제목</h2>
+        <input
+          placeholder='제목을 입력해주세요.'
+          autoComplete='off'
+          id='search'
+          type='text'
+          value={dTitle}
+          onChange={titleChangeHandler}
+        />
+        <h2>내용</h2>
+        <textarea
+          value={dContent}
+          onChange={contentChangeHandler}
+          autoComplete='off'
+          placeholder='내용을 입력해주세요.'
+          className={styles.contentInput}
+        />
+        <ShareDiarySelect />
 
-          <FileInput onChange={inputChangeHandler} />
+        <FileInput onChange={inputChangeHandler} />
 
-          {isLoading ? <Loading /> : <DiaryButton onClick={editDiaryHandler} text='Edit Confirm' />}
-          {visibleModal && <Modal title='알림' desc={message} setVisibleModal={setVisibleModal} />}
-        </div>
-      )}
+        {isLoading ? <Loading /> : <DiaryButton onClick={editDiaryHandler} text='Edit Confirm' />}
+        {visibleModal && <Modal title='알림' desc={message} setVisibleModal={setVisibleModal} />}
+      </div>
     </MainContainer>
   );
 };

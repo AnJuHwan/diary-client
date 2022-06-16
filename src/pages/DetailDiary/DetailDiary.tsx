@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { diaryDetailState } from '../../recoil/diary';
@@ -6,30 +6,18 @@ import { deleteDiary, getDetailDiary } from '../../services/diary';
 import { IDetailData } from '../../types/diary';
 import Modal from '../../components/Common/Modal/Modal';
 import styles from './detailDiary.module.scss';
+import useIsLogin from '../../hooks/useIsLogin';
 
 let timer: NodeJS.Timeout;
 const DetailDiary = () => {
   const [detail, setDetail] = useRecoilState<IDetailData>(diaryDetailState);
-  const [visibleModal, setVisibleModal] = useState(false);
-  const [message, setMessage] = useState('');
   const navigate = useNavigate();
   const params = useParams();
+  const { message, visibleModal, setVisibleModal, setMessage } = useIsLogin();
   const localStorageId = localStorage.getItem('id');
   const { title: dTitle, content: dContent, postImage: image } = detail;
 
-  useEffect(() => {
-    if (!localStorageId) {
-      setVisibleModal(true);
-      setMessage('로그인 후 이용해주세요');
-      timer = setTimeout(() => {
-        navigate('/signin');
-      }, 1500);
-    }
-    return () => {
-      setVisibleModal(false);
-      clearTimeout(timer);
-    };
-  }, [localStorageId, navigate]);
+  useIsLogin();
 
   useEffect(() => {
     const getDetailDiaryItem = async () => {
@@ -61,27 +49,27 @@ const DetailDiary = () => {
   return (
     <main className={styles.main}>
       {image && <img className={styles.postImage} src={image} alt='다이어리 이미지' />}
-      {dTitle && (
-        <div className={styles.contentWrap}>
-          <h2>제목</h2>
-          <div className={styles.title}>{dTitle}</div>
-          <h2>내용</h2>
-          <textarea className={styles.content} value={dContent} readOnly />
 
-          <div className={styles.buttonBox}>
-            {localStorageId === detail.userId && (
-              <>
-                <Link to={`/edit/${params.id}`} className={styles.link}>
-                  Edit
-                </Link>
-                <button type='button' onClick={deleteDiaryHandler}>
-                  Delete
-                </button>
-              </>
-            )}
-          </div>
+      <div className={styles.contentWrap}>
+        <h2>제목</h2>
+        <div className={styles.title}>{dTitle}</div>
+        <h2>내용</h2>
+        <textarea className={styles.content} value={dContent} readOnly />
+
+        <div className={styles.buttonBox}>
+          {localStorageId === detail.userId && (
+            <>
+              <Link to={`/edit/${params.id}`} className={styles.link}>
+                Edit
+              </Link>
+              <button type='button' onClick={deleteDiaryHandler}>
+                Delete
+              </button>
+            </>
+          )}
         </div>
-      )}
+      </div>
+
       {visibleModal && <Modal title='알림' desc={message} setVisibleModal={setVisibleModal} />}
     </main>
   );
