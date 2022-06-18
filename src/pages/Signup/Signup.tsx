@@ -75,7 +75,7 @@ const Signup = () => {
       setNicknameError('');
     } catch (error: any) {
       setIsNicknameCheckData(false);
-      setNicknameError('이미 가입되어있는 닉네임가 있습니다.');
+      setNicknameError('이미 가입되어있는 닉네임이 있습니다.');
     }
   };
 

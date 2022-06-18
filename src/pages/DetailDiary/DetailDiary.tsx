@@ -7,6 +7,7 @@ import { IDetailData } from '../../types/diary';
 import Modal from '../../components/Common/Modal/Modal';
 import styles from './detailDiary.module.scss';
 import useIsLogin from '../../hooks/useIsLogin';
+import DiaryButton from '../../components/Common/DiaryButton/DiaryButton';
 
 let timer: NodeJS.Timeout;
 const DetailDiary = () => {
@@ -62,9 +63,7 @@ const DetailDiary = () => {
               <Link to={`/edit/${params.id}`} className={styles.link}>
                 Edit
               </Link>
-              <button type='button' onClick={deleteDiaryHandler}>
-                Delete
-              </button>
+              <DiaryButton onClick={deleteDiaryHandler} text='Delete' />
             </>
           )}
         </div>
